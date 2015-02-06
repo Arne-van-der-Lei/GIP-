@@ -1,6 +1,7 @@
 package org.friet.net.UI;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -46,8 +47,8 @@ public class UI {
     public static void setLAF(){
         
         //menubar
-        UIManager.put("MenuBar.background", new ColorUIResource(new Color(0,0,0)));
-        UIManager.put("MenuBar.gradient", list(new ColorUIResource(new Color(0,0,0))));
+        UIManager.put("MenuBar.background", new ColorUIResource(new Color(45, 45, 45)));
+        UIManager.put("MenuBar.gradient", list(new ColorUIResource(new Color(45, 45, 45))));
         UIManager.put("MenuBar.borderColor", new ColorUIResource(geel));
         UIManager.put("MenuBar.border", new BBorder());
         
@@ -95,7 +96,7 @@ public class UI {
         UIManager.put("Table.gridColor", new ColorUIResource(grijs));
         
         //font
-        ///setUIFont(new FontUIResource("Monospaced",Font.PLAIN,12), new ColorUIResource(Color.white));
+        setUIFont(new FontUIResource("calibri", Font.PLAIN, 12), new ColorUIResource(Color.white));
     }
     
     

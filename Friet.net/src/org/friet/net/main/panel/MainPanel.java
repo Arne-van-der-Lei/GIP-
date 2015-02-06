@@ -1,6 +1,7 @@
 package org.friet.net.main.panel;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -24,6 +25,7 @@ public class MainPanel extends JPanel {
     public PanelBestelling bestelling;
     public PanelLevering levering;
     public PanelWerknemers werknemers;
+    public JPanel centerPanel;
 
     public MainPanel() {
         this.setLayout(new BorderLayout());
@@ -32,7 +34,7 @@ public class MainPanel extends JPanel {
         } catch (Exception ex) {
             Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        centerPanel = new JPanel(new CardLayout());
         footer = new PanelFooter();
         bestelling = new PanelBestelling();
         levering = new PanelLevering();
@@ -41,8 +43,9 @@ public class MainPanel extends JPanel {
         levering.setVisible(false);
         footer.setVisible(true);
 
-        this.add(bestelling, BorderLayout.CENTER);
-        this.add(levering, BorderLayout.CENTER);
+        centerPanel.add(levering, "1");
+        centerPanel.add(bestelling, "2");
+        this.add(centerPanel);
         this.add(footer, BorderLayout.SOUTH);
 
     }
