@@ -94,7 +94,6 @@ public class Main extends JFrame {
         this.setVisible(true);
         this.revalidate();
         this.repaint();
-        System.out.println(main.bestelling.getSize());
     }
     
     public class Event implements MenuListener {

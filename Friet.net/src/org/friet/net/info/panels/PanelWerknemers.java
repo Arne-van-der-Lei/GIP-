@@ -5,6 +5,7 @@
  */
 package org.friet.net.info.panels;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -12,7 +13,7 @@ import javax.swing.JPanel;
  * @author arne
  */
 public class PanelWerknemers extends JPanel{
-    
+    private JLabel naam, straat, gemeente;
     public PanelWerknemers(){
         
     }

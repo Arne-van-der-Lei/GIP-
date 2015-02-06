@@ -38,13 +38,14 @@ public class MainPanel extends JPanel {
         footer = new PanelFooter();
         bestelling = new PanelBestelling();
         levering = new PanelLevering();
-        //werknemers = new PanelWerknemers();
+        werknemers = new PanelWerknemers();
         bestelling.setVisible(false);
         levering.setVisible(false);
         footer.setVisible(true);
 
         centerPanel.add(levering, "1");
         centerPanel.add(bestelling, "2");
+        centerPanel.add(werknemers, "2");
         this.add(centerPanel);
         this.add(footer, BorderLayout.SOUTH);
 
