@@ -74,9 +74,9 @@ public class UI {
         UIManager.put("TabbedPane.borderHightlightColor",new ColorUIResource(orangje));
         UIManager.put("TabbedPane.darkShadow", new ColorUIResource(new Color(10,10,10)));
         UIManager.put("TabbedPane.focus", new ColorUIResource(new Color(10,10,10)));
-        UIManager.put("TabbedPane.contentBorderInsets", new Insets(4,4,4,4));
+        UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
         UIManager.put("TabbedPane.unselectedBackground", new ColorUIResource(grijs2));
-        UIManager.put("TabbedPane.selectedTabPadInsets", new Insets(4,4,4,4));
+        UIManager.put("TabbedPane.selectedTabPadInsets", new Insets(0, 0, 0, 0));
         UIManager.put("TabbedPane.contentAreaColor", new ColorUIResource(grijs));
         UIManager.put("TabbedPane.selected", new ColorUIResource(grijs));
         UIManager.put("TabbedPane.tabInsets", new Insets(4,4,4,4));

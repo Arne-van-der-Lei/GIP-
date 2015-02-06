@@ -7,7 +7,6 @@ package org.friet.net.levering.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,7 +46,6 @@ public class PanelLevering extends JPanel {
 
         JPanel p1 = new JPanel(new GridLayout(2, 1));
         JPanel p = new JPanel(new GridLayout(7, 1));
-        p.setMaximumSize(new Dimension(50, 2000));
 
         list = new JTable(new DefaultTableModel(new Object[]{"Wat:", "Hoevelheid"}, 0));
         scroll = new JScrollPane(list);
