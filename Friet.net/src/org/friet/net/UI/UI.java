@@ -1,7 +1,6 @@
 package org.friet.net.UI;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -96,7 +95,7 @@ public class UI {
         UIManager.put("Table.gridColor", new ColorUIResource(grijs));
         
         //font
-        setUIFont(new FontUIResource("Monospaced",Font.PLAIN,12), new ColorUIResource(Color.white));
+        //setUIFont(new FontUIResource("Monospaced",Font.PLAIN,12), new ColorUIResource(Color.white));
     }
     
     

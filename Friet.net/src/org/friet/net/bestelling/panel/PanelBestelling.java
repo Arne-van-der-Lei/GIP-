@@ -5,11 +5,19 @@
  */
 package org.friet.net.bestelling.panel;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
-import org.friet.net.main.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.ListSelectionModel;
+import org.friet.net.main.Main;
 
 /**
  *
@@ -35,6 +43,7 @@ public class PanelBestelling extends JPanel {
         this.setLayout(new BorderLayout());
         listModel = new DefaultListModel();
         list = new JList(listModel);
+
         this.add(list);
         listModelprijs = new DefaultListModel();
         listprijs = new JList(listModelprijs);
@@ -60,7 +69,7 @@ public class PanelBestelling extends JPanel {
         for (String key : items.keySet()) {
 
             JPanel panel = new JPanel(false);
-            
+
             panel.setVisible(true);
             panel.setLayout(null);
             tabs.addTab("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style=\"font-size:20px\"><p>" + key + "<p></body></html>", panel);
@@ -89,8 +98,6 @@ public class PanelBestelling extends JPanel {
     protected void getItems() {
         items = Main.db.getItems();
     }
-
-    
 
     public class Event implements ActionListener {
 

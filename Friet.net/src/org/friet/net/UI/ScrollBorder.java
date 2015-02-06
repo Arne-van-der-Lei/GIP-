@@ -1,7 +1,7 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and open the template in the editor
  */
 package org.friet.net.UI;
 
@@ -20,15 +20,15 @@ public class ScrollBorder implements Border {
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
         g.setColor(UIManager.getColor("ScrollPane.borderColor"));
-        
-        g.drawLine(x, y+height-2,x+ width-1,y+ height-2);
-        g.drawLine(x, y+height-1,x+ width-1,y+ height-1);
-        
+
+        g.drawLine(x, y + height - 2, x + width - 1, y + height - 2);
+        g.drawLine(x, y + height - 1, x + width - 1, y + height - 1);
+
     }
 
     @Override
     public Insets getBorderInsets(Component c) {
-        return new Insets(1,1,1,1);
+        return new Insets(1, 1, 1, 1);
     }
 
     @Override

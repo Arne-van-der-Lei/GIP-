@@ -7,9 +7,9 @@ import javax.swing.JMenuBar;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import org.friet.net.UI.UI;
-import org.friet.net.database.*;
-import org.friet.net.login.panel.*;
-import org.friet.net.main.panel.*;
+import org.friet.net.database.Database;
+import org.friet.net.login.panel.PanelLogin;
+import org.friet.net.main.panel.MainPanel;
 
 public class Main extends JFrame {
 
@@ -93,7 +93,6 @@ public class Main extends JFrame {
         
         this.setVisible(true);
         this.revalidate();
-        System.out.print(main.footer.getBounds());
         this.repaint();
     }
     
@@ -102,10 +101,10 @@ public class Main extends JFrame {
         @Override
         public void menuSelected(MenuEvent e) {
             if (e.getSource() == menu.getMenu(0)) {
-                //Main.frame.main.bestelling.setVisible(false);
+                Main.frame.main.bestelling.setVisible(false);
                 Main.frame.main.levering.setVisible(true);
             } else if (e.getSource() == menu.getMenu(1)) {
-                //Main.frame.main.bestelling.setVisible(true);
+                Main.frame.main.bestelling.setVisible(true);
                 Main.frame.main.levering.setVisible(false);
             }
         }

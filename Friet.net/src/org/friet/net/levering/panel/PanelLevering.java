@@ -5,12 +5,24 @@
  */
 package org.friet.net.levering.panel;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import org.friet.net.main.*;
+import org.friet.net.main.Main;
 
 /**
  *
@@ -32,11 +44,11 @@ public class PanelLevering extends JPanel {
         Event event = new Event();
 
         this.setLayout(new BorderLayout());
-        
-        JPanel p1 = new JPanel(new GridLayout(2,1));
-        JPanel p = new JPanel(new GridLayout(7,1));
-        p.setMaximumSize(new Dimension(50,2000));
-        
+
+        JPanel p1 = new JPanel(new GridLayout(2, 1));
+        JPanel p = new JPanel(new GridLayout(7, 1));
+        p.setMaximumSize(new Dimension(50, 2000));
+
         list = new JTable(new DefaultTableModel(new Object[]{"Wat:", "Hoevelheid"}, 0));
         scroll = new JScrollPane(list);
         p1.add(scroll);
@@ -44,44 +56,43 @@ public class PanelLevering extends JPanel {
         delete = new JButton("Delete");
         delete.setVisible(true);
         delete.addActionListener(event);
-        p.add(delete,BorderLayout.EAST);
+        p.add(delete, BorderLayout.EAST);
 
         cansel = new JButton("Cancel");
         cansel.setVisible(true);
         cansel.addActionListener(event);
-        p.add(cansel,BorderLayout.EAST);
+        p.add(cansel, BorderLayout.EAST);
 
         nieuweKlant = new JButton("Toevoegen");
         nieuweKlant.setVisible(true);
         nieuweKlant.addActionListener(event);
-        p.add(nieuweKlant,BorderLayout.EAST);
+        p.add(nieuweKlant, BorderLayout.EAST);
 
         add1 = new JButton("1");
         add1.setVisible(true);
         add1.addActionListener(event);
-        p.add(add1,BorderLayout.EAST);
+        p.add(add1, BorderLayout.EAST);
         add10 = new JButton("10");
         add10.setVisible(true);
         add10.addActionListener(event);
-        p.add(add10,BorderLayout.EAST);
+        p.add(add10, BorderLayout.EAST);
         add100 = new JButton("100");
         add100.setVisible(true);
         add100.addActionListener(event);
-        p.add(add100,BorderLayout.EAST);
+        p.add(add100, BorderLayout.EAST);
         confirm = new JButton("confirm");
         confirm.setVisible(true);
         confirm.addActionListener(event);
-        p.add(confirm,BorderLayout.EAST);
-        
-        
+        p.add(confirm, BorderLayout.EAST);
+
         tabs = new JTabbedPane();
         tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         for (String key : items.keySet()) {
 
             JPanel panel = new JPanel(false);
             panel.setVisible(true);
-            panel.setLayout(new GridLayout(5,5));
-            
+            panel.setLayout(new GridLayout(5, 5));
+
             tabs.addTab("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style='font-size:20px'><p>" + key + "<p></body></html>", panel);
             for (String naam : items.get(key).keySet()) {
                 JButton btn = new JButton("<html><body style='font-size:20px'><p>" + naam + "<p></body></html>");
@@ -95,7 +106,7 @@ public class PanelLevering extends JPanel {
         p1.add(p);
         this.toggleKeypad();
         this.add(tabs);
-        this.add(p1,BorderLayout.EAST);
+        this.add(p1, BorderLayout.EAST);
     }
 
     protected void getItems() {

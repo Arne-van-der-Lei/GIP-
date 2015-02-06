@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.friet.net.main.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -22,39 +16,41 @@ import org.friet.net.levering.panel.PanelLevering;
  *
  * @author arne
  */
-public class MainPanel extends JPanel{
+public class MainPanel extends JPanel {
+
     private BufferedImage image;
-    
+
     public PanelFooter footer;
     public PanelBestelling bestelling;
     public PanelLevering levering;
     public PanelWerknemers werknemers;
-    
-    public MainPanel(){
+
+    public MainPanel() {
         this.setLayout(new BorderLayout());
         try {
             this.image = ImageIO.read(new File("src/res/friet.png"));
         } catch (Exception ex) {
             Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         footer = new PanelFooter();
-        //bestelling = new PanelBestelling();
+        bestelling = new PanelBestelling();
         levering = new PanelLevering();
         //werknemers = new PanelWerknemers();
-        
+        bestelling.setVisible(false);
         levering.setVisible(false);
         footer.setVisible(true);
-        
-        this.add(levering,BorderLayout.CENTER);
-        this.add(footer,BorderLayout.SOUTH);
-        
+
+        this.add(bestelling, BorderLayout.CENTER);
+        this.add(levering, BorderLayout.CENTER);
+        this.add(footer, BorderLayout.SOUTH);
+
     }
-    
+
     @Override
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image,this.getWidth()/2-image.getWidth()/2, this.getHeight()/2-image.getHeight()/2, this);
-        
+        g.drawImage(image, this.getWidth() / 2 - image.getWidth() / 2, this.getHeight() / 2 - image.getHeight() / 2, this);
+
     }
 }
