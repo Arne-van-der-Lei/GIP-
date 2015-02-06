@@ -95,7 +95,7 @@ public class UI {
         UIManager.put("Table.gridColor", new ColorUIResource(grijs));
         
         //font
-        //setUIFont(new FontUIResource("Monospaced",Font.PLAIN,12), new ColorUIResource(Color.white));
+        ///setUIFont(new FontUIResource("Monospaced",Font.PLAIN,12), new ColorUIResource(Color.white));
     }
     
     
