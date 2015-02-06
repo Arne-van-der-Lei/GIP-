@@ -1,2 +1,2 @@
 # GIP-
-Mijn GIP voor softwareonfwikkeling
+Mijn GIP voor softwareontwikkeling
