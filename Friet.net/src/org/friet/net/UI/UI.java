@@ -9,16 +9,17 @@ import java.util.List;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
+import javax.swing.plaf.InsetsUIResource;
 
 /**
  *
  * @author arne
  */
 public class UI {
-    private static final Color geel = new Color(255,229,0);
-    private static final Color orangje = new Color(81,70,0);
-    private static final Color grijs = new Color(75,75,75);
-    private static final Color grijs2 = new Color(145,145,145);
+    public static final Color geel = new Color(255, 229, 0);
+    public static final Color orangje = new Color(81, 70, 0);
+    public static final Color grijs = new Color(0, 62, 107);
+    public static final Color grijs2 = new Color(145, 145, 145);
     
     public static void setUIFont (FontUIResource f, ColorUIResource c){
         Enumeration keys = UIManager.getDefaults().keys();
@@ -32,8 +33,8 @@ public class UI {
             if (value != null && key.toString().contains("foreground")){
                 UIManager.put (key, c);
             }
-            if (key.toString().startsWith("OptionPane")&& value != null){
-                    System.out.println(key + " --- " + value.toString());
+            if (key.toString().startsWith("TextField.") && value != null) {
+                System.out.println(key + " --- " + value.toString());
             }
         }
     } 
@@ -45,19 +46,22 @@ public class UI {
     }
     
     public static void setLAF(){
-        
+        //font
+        setUIFont(new FontUIResource("calibri", Font.PLAIN, 12), new ColorUIResource(Color.white));
+
         //menubar
         UIManager.put("MenuBar.background", new ColorUIResource(new Color(45, 45, 45)));
-        UIManager.put("MenuBar.gradient", list(new ColorUIResource(new Color(45, 45, 45))));
+        UIManager.put("MenuBar.gradient", list(new ColorUIResource(new Color(23, 81, 203))));
         UIManager.put("MenuBar.borderColor", new ColorUIResource(geel));
         UIManager.put("MenuBar.border", new BBorder());
+        UIManager.put("MenuBar.font", new FontUIResource("calibri", Font.PLAIN, 16));
         
         //menu
-        UIManager.put("Menu.borderPainted", false);
+        UIManager.put("Menu.border", new MenuBorder());
         UIManager.put("Menu.selectionBackground", new ColorUIResource(geel));
         
         //paneel
-        UIManager.put("Panel.background", new ColorUIResource(new Color(0,0,0)));
+        UIManager.put("Panel.background", new ColorUIResource(new Color(255, 255, 255)));
         
         //Option pane
         UIManager.put("OptionPane.background", new ColorUIResource(new Color(0,0,0)));
@@ -68,7 +72,8 @@ public class UI {
         UIManager.put("Button.border", new ButtonBorder());
         UIManager.put("Button.borderColor", new ColorUIResource(geel));
         UIManager.put("Button.enabledBorderColor", new ColorUIResource(orangje));
-        UIManager.put("Button.disabledText", new ColorUIResource(new Color(10,10,10)));
+        UIManager.put("Button.disabledText", new ColorUIResource(new Color(10, 10, 10)));
+        UIManager.put("Button.font", new FontUIResource("calibri", Font.PLAIN, 16));
         
         //tabbedPane
         UIManager.put("TabbedPane.borderHightlightColor",new ColorUIResource(orangje));
@@ -90,13 +95,25 @@ public class UI {
         //TableHeader
         UIManager.put("TableHeader.cellBorder", new NoBorder());
         UIManager.put("TableHeader.background", new ColorUIResource(grijs));
-        
+        UIManager.put("Table.scrollPaneBorder", new NoBorder());
         //Table
         UIManager.put("Table.background", new ColorUIResource(grijs2));
         UIManager.put("Table.gridColor", new ColorUIResource(grijs));
-        
-        //font
-        setUIFont(new FontUIResource("calibri", Font.PLAIN, 12), new ColorUIResource(Color.white));
+
+        //TextField
+        UIManager.put("TextField.foreground", new ColorUIResource(new Color(0, 0, 0)));
+        UIManager.put("TextField.margin", new InsetsUIResource(0, 10, 0, 0));
+
+        //PasswordField
+        UIManager.put("PasswordField.foreground", new ColorUIResource(new Color(0, 0, 0)));
+        UIManager.put("PasswordField.margin", new InsetsUIResource(0, 10, 0, 0));
+
+        //paswordField
+        UIManager.put("PaswordField.foreground", new ColorUIResource(new Color(0, 0, 0)));
+
+        //combobox 
+        UIManager.put("ComboBox.foreground", new ColorUIResource(new Color(0, 0, 0)));
+
     }
     
     

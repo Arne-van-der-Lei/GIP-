@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2015 arne van der Lei
  */
 package org.friet.net.UI;
 
@@ -14,15 +12,15 @@ import javax.swing.border.Border;
  *
  * @author arne
  */
-public class NoBorder implements Border {
+public class MenuBorder implements Border {
 
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+
     }
 
     @Override
     public Insets getBorderInsets(Component c) {
-        
         return new Insets(10, 10, 10, 10);
     }
 
@@ -30,4 +28,5 @@ public class NoBorder implements Border {
     public boolean isBorderOpaque() {
         return false;
     }
+
 }

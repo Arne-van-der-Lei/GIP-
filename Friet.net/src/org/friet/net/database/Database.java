@@ -1,9 +1,17 @@
 package org.friet.net.database;
 
-import java.sql.*;
-import java.util.*;
-import java.util.logging.*;
-import org.friet.net.main.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.friet.net.main.Main;
 
 public class Database {
 
@@ -19,8 +27,11 @@ public class Database {
 
             con = DriverManager.getConnection(DB, "", "");
 
-        } catch (ClassNotFoundException e){e.printStackTrace();
-        } catch (SQLException e) {e.printStackTrace();}
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -45,30 +56,31 @@ public class Database {
 
     }
 
-    public boolean checkPass(String user, String password) {
+    public int checkPass(String user, String password) {
 
         Statement stat;
         ResultSet set;
 
         try {
             stat = con.createStatement();
-            stat.execute("SELECT naam,pass,loginid FROM login");
+            stat.execute("SELECT naam,pass,manager,loginid FROM login");
             set = stat.getResultSet();
-            boolean bool = false;
             while (set.next()) {
                 String naam = set.getString("naam");
                 String pass = set.getString("pass");
                 Main.Werknemmersnummer = set.getInt("loginid");
-                if (naam.equals(user) && password.equals(pass) && !bool) {
-                    bool = true;
+                if (naam.equals(user) && password.equals(pass)) {
+                    if (set.getBoolean("manager")) {
+                        return 2;
+                    }
+                    return 1;
                 }
             }
-            return bool;
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return false;
+        return 0;
     }
 
     public Map<String, Map<String, Float>> getItems() {
@@ -158,7 +170,7 @@ public class Database {
         ResultSet set;
         try {
             stat = con.createStatement();
-            stat.execute("insert into bestelling values(" + klantId + "," + werknemerId + "," + totaalprijs + ")");
+            stat.execute("insert into bestelling(KlantID,WerknemerID,Totaalprijs) values(" + klantId + "," + werknemerId + "," + totaalprijs + ")");
             set = stat.getResultSet();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -193,5 +205,44 @@ public class Database {
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void updatewerknemer(String naam, String adress, String gemeente, String email, int ID) {
+        Statement stat;
+        ResultSet set;
+        try {
+            stat = con.createStatement();
+            stat.execute("Update naam,adres,gemeente,e-mailadres SET naam='" + naam + "',adres='" + adress + "',gemeente='" + gemeente + "',e-mailadres='" + email + "' WHERE WerknemerID=" + ID + "");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public ArrayList getwerknemers() {
+
+        ArrayList hallo = new ArrayList();
+        Statement stat;
+        ResultSet set;
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT * FROM werknemer ");
+            set = stat.getResultSet();
+            while (set.next()) {
+                Map<String, String> hash = new TreeMap<String, String>();
+
+                hash.put("naam", set.getString("naam"));
+                hash.put("adres", set.getString("adres"));
+                hash.put("gemeente", set.getString("gemeente"));
+                hash.put("e-mail", set.getString("e-mailadres"));
+                hash.put("werknemer ID", set.getString("WerknemerID"));
+                hallo.add(hash);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return hallo;
     }
 }

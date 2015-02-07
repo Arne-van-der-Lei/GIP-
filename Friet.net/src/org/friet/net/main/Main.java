@@ -1,5 +1,6 @@
 package org.friet.net.main;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -19,7 +20,7 @@ public class Main extends JFrame {
     public static Database db;
     public static boolean manager;
     public static int Werknemmersnummer;
-    
+    public static int Klantnummer;
     
     
     public static void main(String[] args) {
@@ -40,18 +41,20 @@ public class Main extends JFrame {
 
     public static boolean login() {
         JFrame frameLogin = new JFrame("Login");
-        frameLogin.setSize(250, 150);
+        frameLogin.setSize(500, 500);
         frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        frameLogin.setLayout(null);
         PanelLogin panel = new PanelLogin();
+        panel.setBounds(50, 50, 400, 400);
         frameLogin.add(panel);
         frameLogin.setVisible(true);
         frameLogin.setAlwaysOnTop(true);
         frameLogin.setResizable(false);
-        //TODO: uitroepteken
-        while (panel.done) {
+        //TODO: uitroepteken + manager
+        while (!panel.done) {
 
         }
+        Main.manager = true;
 
         frameLogin.setVisible(false);
         return false;
@@ -63,11 +66,13 @@ public class Main extends JFrame {
         this.setName("Friet.net");
         this.setTitle("Friet.net");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setBounds(0,0,600,600);
         
         Event event = new Event();
         
         menu = new JMenuBar();
+        menu.setMaximumSize(new Dimension(10, 100));
         
         JMenu levering = new JMenu("Levering");
         levering.addMenuListener(event);
@@ -76,12 +81,16 @@ public class Main extends JFrame {
         JMenu Bestelling = new JMenu("Bestelling");
         Bestelling.addMenuListener(event);
         Bestelling.setVisible(true);
-        
-        menu.add(levering);
-        menu.add(Bestelling);
-        
-        if (Main.manager) {
 
+        menu.add(Bestelling);
+        menu.add(levering);
+
+        if (Main.manager) {
+            JMenu Werknemer = new JMenu("Werknemer");
+            Werknemer.addMenuListener(event);
+            Werknemer.setVisible(true);
+
+            menu.add(Werknemer);
         }
         
         menu.setVisible(true);
@@ -94,6 +103,7 @@ public class Main extends JFrame {
         this.setVisible(true);
         this.revalidate();
         this.repaint();
+        //System.out.println(Main.frame.main.levering.cansel.getBounds());
     }
     
     public class Event implements MenuListener {
@@ -101,11 +111,17 @@ public class Main extends JFrame {
         @Override
         public void menuSelected(MenuEvent e) {
             if (e.getSource() == menu.getMenu(0)) {
-                Main.frame.main.bestelling.setVisible(false);
-                Main.frame.main.levering.setVisible(true);
-            } else if (e.getSource() == menu.getMenu(1)) {
                 Main.frame.main.bestelling.setVisible(true);
                 Main.frame.main.levering.setVisible(false);
+                Main.frame.main.werknemers.setVisible(false);
+            } else if (e.getSource() == menu.getMenu(1)) {
+                Main.frame.main.bestelling.setVisible(false);
+                Main.frame.main.levering.setVisible(true);
+                Main.frame.main.werknemers.setVisible(false);
+            } else if (e.getSource() == menu.getMenu(2)) {
+                Main.frame.main.bestelling.setVisible(false);
+                Main.frame.main.levering.setVisible(false);
+                Main.frame.main.werknemers.setVisible(true);
             }
         }
 

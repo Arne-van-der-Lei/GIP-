@@ -6,7 +6,6 @@
 package org.friet.net.levering.panel;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,9 +17,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import org.friet.net.UI.Table;
 import org.friet.net.main.Main;
 
 /**
@@ -31,10 +30,11 @@ public class PanelLevering extends JPanel {
 
     public Map<String, Map<String, Float>> items;
     public JScrollPane scroll;
-    public JTable list;
-    public JButton delete, cansel, nieuweKlant, add1, add10, add100, confirm;
+    public Table list;
+    public JButton delete, cansel, nieuweKlant, confirm;
     public int selected = -1;
     public JTabbedPane tabs;
+    public boolean select;
 
     public PanelLevering() {
 
@@ -43,45 +43,33 @@ public class PanelLevering extends JPanel {
         Event event = new Event();
 
         this.setLayout(new BorderLayout());
+        JPanel p1 = new JPanel(new BorderLayout());
+        JPanel p = new JPanel(new GridLayout(1, 4));
 
-        JPanel p1 = new JPanel(new GridLayout(2, 1));
-        JPanel p = new JPanel(new GridLayout(7, 1));
-
-        list = new JTable(new DefaultTableModel(new Object[]{"Wat:", "Hoevelheid"}, 0));
+        list = new Table(new DefaultTableModel(new Object[]{"Artiekel:", "Hoevelheid"}, 0));
         scroll = new JScrollPane(list);
         p1.add(scroll);
 
-        delete = new JButton("Delete");
+        delete = new JButton("-");
         delete.setVisible(true);
         delete.addActionListener(event);
-        p.add(delete, BorderLayout.EAST);
+        delete.setName("-");
+        p.add(delete);
 
-        cansel = new JButton("Cancel");
+        cansel = new JButton("/");
         cansel.setVisible(true);
         cansel.addActionListener(event);
-        p.add(cansel, BorderLayout.EAST);
+        p.add(cansel);
 
-        nieuweKlant = new JButton("Toevoegen");
+        nieuweKlant = new JButton("+");
         nieuweKlant.setVisible(true);
         nieuweKlant.addActionListener(event);
-        p.add(nieuweKlant, BorderLayout.EAST);
+        p.add(nieuweKlant);
 
-        add1 = new JButton("1");
-        add1.setVisible(true);
-        add1.addActionListener(event);
-        p.add(add1, BorderLayout.EAST);
-        add10 = new JButton("10");
-        add10.setVisible(true);
-        add10.addActionListener(event);
-        p.add(add10, BorderLayout.EAST);
-        add100 = new JButton("100");
-        add100.setVisible(true);
-        add100.addActionListener(event);
-        p.add(add100, BorderLayout.EAST);
-        confirm = new JButton("confirm");
+        confirm = new JButton("x");
         confirm.setVisible(true);
         confirm.addActionListener(event);
-        p.add(confirm, BorderLayout.EAST);
+        p.add(confirm);
 
         tabs = new JTabbedPane();
         tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -101,54 +89,13 @@ public class PanelLevering extends JPanel {
             }
 
         }
-        p1.add(p);
-        this.toggleKeypad();
+        p1.add(p, BorderLayout.SOUTH);
         this.add(tabs);
         this.add(p1, BorderLayout.EAST);
     }
 
     protected void getItems() {
         items = Main.db.getInhoud();
-    }
-
-    public void toggleKeypad() {
-        if (add1.isEnabled()) {
-            add1.setEnabled(false);
-            add10.setEnabled(false);
-            add100.setEnabled(false);
-            confirm.setEnabled(false);
-            tabs.setEnabled(true);
-            delete.setEnabled(true);
-            nieuweKlant.setEnabled(true);
-            cansel.setEnabled(true);
-            for (Component c : tabs.getComponents()) {
-                if (c.getClass() == JPanel.class) {
-                    JPanel p = (JPanel) c;
-                    for (Component co : p.getComponents()) {
-                        co.setEnabled(true);
-                    }
-                }
-                c.setEnabled(true);
-            }
-        } else {
-            add1.setEnabled(true);
-            add10.setEnabled(true);
-            add100.setEnabled(true);
-            confirm.setEnabled(true);
-            tabs.setEnabled(false);
-            delete.setEnabled(false);
-            nieuweKlant.setEnabled(false);
-            cansel.setEnabled(false);
-            for (Component c : tabs.getComponents()) {
-                if (c.getClass() == JPanel.class) {
-                    JPanel p = (JPanel) c;
-                    for (Component co : p.getComponents()) {
-                        co.setEnabled(false);
-                    }
-                }
-                c.setEnabled(false);
-            }
-        }
     }
 
     public class Event implements ActionListener {
@@ -159,22 +106,16 @@ public class PanelLevering extends JPanel {
             if (e.getSource().getClass() == JButton.class) {
                 if (e.getActionCommand().startsWith("<html><body style='font-size:20px'><p>") && selected == -1) {
                     String[] str = e.getActionCommand().split("<p>");
-                    ((DefaultTableModel) list.getModel()).addRow(new Object[]{str[1], 0});
-                    selected = ((DefaultTableModel) list.getModel()).getRowCount() - 1;
-                    toggleKeypad();
+                    if (select) {
+                        Popup.Create(str[1]);
+                    } else {
+                        ((DefaultTableModel) list.getModel()).addRow(new Object[]{str[1], 1});
+                    }
+                    select = false;
                 }
-                if (e.getSource() == add1) {
-                    ((DefaultTableModel) list.getModel()).setValueAt((int) Integer.parseInt(((DefaultTableModel) list.getModel()).getValueAt(selected, 1).toString()) + 1, selected, 1);
-                }
-                if (e.getSource() == add10) {
-                    ((DefaultTableModel) list.getModel()).setValueAt((int) Integer.parseInt(((DefaultTableModel) list.getModel()).getValueAt(selected, 1).toString()) + 10, selected, 1);
-                }
-                if (e.getSource() == add100) {
-                    ((DefaultTableModel) list.getModel()).setValueAt((int) Integer.parseInt(((DefaultTableModel) list.getModel()).getValueAt(selected, 1).toString()) + 100, selected, 1);
-                }
+
                 if (e.getSource() == confirm) {
-                    toggleKeypad();
-                    selected = -1;
+                    select = true;
                 }
 
                 if (e.getSource() == delete) {
@@ -198,7 +139,6 @@ public class PanelLevering extends JPanel {
                         for (Object i : ((DefaultTableModel) list.getModel()).getDataVector().toArray()) {
                             Vector is = (Vector) i;
                             Main.db.addItem((String) is.toArray()[0], (float) Float.parseFloat(is.toArray()[1].toString()));
-
                         }
                         list.setModel(new DefaultTableModel(new Object[]{"Wat:", "Hoeveelheid"}, 0));
                     }

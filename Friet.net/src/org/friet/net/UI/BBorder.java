@@ -27,7 +27,7 @@ public class BBorder implements Border {
 
     @Override
     public Insets getBorderInsets(Component c) {
-        return new Insets(1,1,1,1);
+        return new Insets(1, 1, 1, 1);
     }
 
     @Override

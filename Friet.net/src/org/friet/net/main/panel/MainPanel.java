@@ -39,6 +39,7 @@ public class MainPanel extends JPanel {
         bestelling = new PanelBestelling();
         levering = new PanelLevering();
         werknemers = new PanelWerknemers();
+        werknemers.setVisible(false);
         bestelling.setVisible(false);
         levering.setVisible(false);
         footer.setVisible(true);

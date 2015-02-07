@@ -31,7 +31,10 @@ public class ButtonBorder implements Border {
 
     @Override
     public Insets getBorderInsets(Component c) {
-        return new Insets(1,1,1,1);
+        if (c.getName() == "-") {
+            return new Insets(20, 10, 20, 10);
+        }
+        return new Insets(3, 3, 3, 3);
     }
 
     @Override
