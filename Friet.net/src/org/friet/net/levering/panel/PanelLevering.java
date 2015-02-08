@@ -20,6 +20,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import org.friet.net.UI.Table;
+import org.friet.net.UI.icons.Icone;
 import org.friet.net.main.Main;
 
 /**
@@ -50,25 +51,29 @@ public class PanelLevering extends JPanel {
         scroll = new JScrollPane(list);
         p1.add(scroll);
 
-        delete = new JButton("-");
+        delete = new JButton("");
         delete.setVisible(true);
         delete.addActionListener(event);
         delete.setName("-");
+        delete.setIcon(new Icone("Delete"));
         p.add(delete);
 
-        cansel = new JButton("/");
+        cansel = new JButton("");
         cansel.setVisible(true);
         cansel.addActionListener(event);
+        cansel.setIcon(new Icone("Cancel"));
         p.add(cansel);
 
-        nieuweKlant = new JButton("+");
+        nieuweKlant = new JButton("");
         nieuweKlant.setVisible(true);
         nieuweKlant.addActionListener(event);
+        nieuweKlant.setIcon(new Icone("Confirm"));
         p.add(nieuweKlant);
 
-        confirm = new JButton("x");
+        confirm = new JButton("");
         confirm.setVisible(true);
         confirm.addActionListener(event);
+        confirm.setIcon(new Icone("Multi"));
         p.add(confirm);
 
         tabs = new JTabbedPane();

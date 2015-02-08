@@ -1,9 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2015 arne van der Lei
  */
-package org.friet.net.UI;
+package org.friet.net.UI.border;
 
 import java.awt.Component;
 import java.awt.Graphics;
@@ -22,8 +20,8 @@ public class NoBorder implements Border {
 
     @Override
     public Insets getBorderInsets(Component c) {
-        
-        return new Insets(10, 10, 10, 10);
+
+        return new Insets(0, 0, 0, 0);
     }
 
     @Override

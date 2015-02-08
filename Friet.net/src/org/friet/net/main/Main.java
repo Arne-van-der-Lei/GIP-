@@ -51,7 +51,7 @@ public class Main extends JFrame {
         frameLogin.setAlwaysOnTop(true);
         frameLogin.setResizable(false);
         //TODO: uitroepteken + manager
-        while (!panel.done) {
+        while (panel.done) {
 
         }
         Main.manager = true;
@@ -122,6 +122,7 @@ public class Main extends JFrame {
                 Main.frame.main.bestelling.setVisible(false);
                 Main.frame.main.levering.setVisible(false);
                 Main.frame.main.werknemers.setVisible(true);
+                
             }
         }
 

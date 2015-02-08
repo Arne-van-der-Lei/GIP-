@@ -11,11 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.TreeMap;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import org.friet.net.UI.Table;
 import org.friet.net.main.Main;
@@ -62,7 +62,7 @@ public class PanelWerknemers extends JPanel {
         p1.add(remove);
 
         for (Object s : werknemersInfo) {
-            Map<String, String> map = (Map<String, String>) s;
+            TreeMap<String, String> map = (TreeMap<String, String>) s;
             model.addRow(map.values().toArray());
         }
 
@@ -85,23 +85,7 @@ public class PanelWerknemers extends JPanel {
 
             if (e.getSource() == edit) {
 
-                if (editing) {
-                    edit.setText("Update werknemer");
-                    for (Object o : naam) {
-                        JTextField os = (JTextField) o;
-                        os.setEditable(editing);
-                    }
-                } else {
-                    String[] s;
-                    for (Object o : naam) {
-                        JTextField os = (JTextField) o;
-                        os.setEditable(editing);
-                    }
-                    //Main.db.updatewerknemer(, TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, WIDTH);
-                    edit.setText("verander de werknemer");
-                }
                 
-                editing = !editing;
             }
         }
 

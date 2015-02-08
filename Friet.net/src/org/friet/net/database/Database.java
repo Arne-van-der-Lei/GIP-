@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -229,13 +230,33 @@ public class Database {
             stat.execute("SELECT * FROM werknemer ");
             set = stat.getResultSet();
             while (set.next()) {
-                Map<String, String> hash = new TreeMap<String, String>();
+                TreeMap<String, String> hash;
+                hash = new TreeMap<>(new Comparator<String>() {
+                    public String[] ok = new String[]{"werknemer ID", "naam", "familienaam", "adres", "gemeente", "gemeente code", "e-mail"};
+                    @Override
+                    public int compare(String o1, String o2) {
+                        int first = 1, last = 1;
 
+                        for (int i = 0; i < ok.length; i++) {
+                            if (o1.equals(ok[i])) {
+                                first = i;
+                            }
+
+                            if (o2.equals(ok[i])) {
+                                last = i;
+                            }
+                        }
+
+                        return first > last ? 1 : first < last ? -1 : 0;
+                    }
+                });
                 hash.put("naam", set.getString("naam"));
                 hash.put("adres", set.getString("adres"));
                 hash.put("gemeente", set.getString("gemeente"));
                 hash.put("e-mail", set.getString("e-mailadres"));
                 hash.put("werknemer ID", set.getString("WerknemerID"));
+                hash.put("familienaam", set.getString("familienaam"));
+                hash.put("gemeente code", set.getString("Gemeente code"));
                 hallo.add(hash);
             }
 

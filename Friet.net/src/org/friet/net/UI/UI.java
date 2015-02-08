@@ -10,6 +10,11 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.InsetsUIResource;
+import org.friet.net.UI.border.BBorder;
+import org.friet.net.UI.border.ButtonBorder;
+import org.friet.net.UI.border.MenuBorder;
+import org.friet.net.UI.border.NoBorder;
+import org.friet.net.UI.border.TableHeaderBorder;
 
 /**
  *
@@ -33,7 +38,7 @@ public class UI {
             if (value != null && key.toString().contains("foreground")){
                 UIManager.put (key, c);
             }
-            if (key.toString().startsWith("TextField.") && value != null) {
+            if (key.toString().startsWith("Table.") && value != null) {
                 System.out.println(key + " --- " + value.toString());
             }
         }
@@ -54,11 +59,12 @@ public class UI {
         UIManager.put("MenuBar.gradient", list(new ColorUIResource(new Color(23, 81, 203))));
         UIManager.put("MenuBar.borderColor", new ColorUIResource(geel));
         UIManager.put("MenuBar.border", new BBorder());
-        UIManager.put("MenuBar.font", new FontUIResource("calibri", Font.PLAIN, 16));
         
         //menu
         UIManager.put("Menu.border", new MenuBorder());
         UIManager.put("Menu.selectionBackground", new ColorUIResource(geel));
+        UIManager.put("Menu.borderColor", new ColorUIResource(geel));
+        UIManager.put("Menu.font", new FontUIResource("calibri", Font.PLAIN, 16));
         
         //paneel
         UIManager.put("Panel.background", new ColorUIResource(new Color(255, 255, 255)));
@@ -87,18 +93,19 @@ public class UI {
         UIManager.put("TabbedPane.tabInsets", new Insets(4,4,4,4));
         
         //ScrollPane
-        UIManager.put("ScrollPane.border", new ScrollBorder());
+        UIManager.put("ScrollPane.border", new NoBorder());
         UIManager.put("ScrollPane.background", new ColorUIResource(grijs));
         UIManager.put("ScrollPane.foreground", new ColorUIResource(grijs));
         UIManager.put("ScrollPane.borderColor", new ColorUIResource(orangje));
         
         //TableHeader
-        UIManager.put("TableHeader.cellBorder", new NoBorder());
+        UIManager.put("TableHeader.cellBorder", new TableHeaderBorder());
         UIManager.put("TableHeader.background", new ColorUIResource(grijs));
-        UIManager.put("Table.scrollPaneBorder", new NoBorder());
+        UIManager.put("TableHeader.borderColor", new ColorUIResource(geel));
+
         //Table
         UIManager.put("Table.background", new ColorUIResource(grijs2));
-        UIManager.put("Table.gridColor", new ColorUIResource(grijs));
+        UIManager.put("Table.scrollPaneBorder", new NoBorder());
 
         //TextField
         UIManager.put("TextField.foreground", new ColorUIResource(new Color(0, 0, 0)));

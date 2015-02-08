@@ -64,7 +64,18 @@ public class PanelLogin extends JPanel {
         public void actionPerformed(ActionEvent e) {
             char[] user = passwordText.getPassword();
             try {
-                done = Main.db.checkPass(userText.getText(), encode(new String(user))) == 2 ? true & (Main.manager = true) : Main.db.checkPass(userText.getText(), encode(new String(user))) == 2 ? false : true;
+                int maybe = Main.db.checkPass(userText.getText(), encode(new String(user)));
+                switch (maybe) {
+                    case 0:
+                        done = false;
+                        break;
+                    case 1:
+                        done = true;
+                        break;
+                    case 2:
+                        done = true;
+                        Main.manager = true;
+                }
             } catch (Exception ex) {
                 Logger.getLogger(PanelLogin.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -23,6 +23,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import org.friet.net.UI.Table;
+import org.friet.net.UI.icons.Icone;
 import org.friet.net.main.Main;
 
 /**
@@ -54,24 +55,29 @@ public class PanelBestelling extends JPanel {
 
         JPanel p2 = new JPanel(new GridLayout(2, 1));
         ipfield = new JTextField();
+        ipfield.setText("0.0");
         p2.add(ipfield);
         JPanel p1 = new JPanel(new GridLayout(1, 3));
         p2.add(p1);
         p.add(p2, BorderLayout.SOUTH);
-        delete = new JButton("-");
+        delete = new JButton("");
         delete.setVisible(true);
         delete.addActionListener(event);
         delete.setName("-");
+        delete.setIcon(new Icone("Delete"));
         p1.add(delete);
 
-        cansel = new JButton("/");
+        cansel = new JButton("");
         cansel.setVisible(true);
         cansel.addActionListener(event);
+        cansel.setIcon(new Icone("Cancel"));
+        cansel.setSelectedIcon(new Icone("Cancel"));
         p1.add(cansel);
 
-        nieuweKlant = new JButton("afrekenen");
+        nieuweKlant = new JButton("");
         nieuweKlant.setVisible(true);
         nieuweKlant.addActionListener(event);
+        nieuweKlant.setIcon(new Icone("Confirm"));
         p1.add(nieuweKlant);
 
         JTabbedPane tabs = new JTabbedPane();
