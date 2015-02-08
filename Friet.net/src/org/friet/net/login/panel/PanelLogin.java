@@ -3,6 +3,8 @@ package org.friet.net.login.panel;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.security.MessageDigest;
@@ -14,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import org.friet.net.UI.Button;
 import org.friet.net.main.Main;
 import org.friet.net.main.panel.MainPanel;
 import org.friet.net.main.panel.PanelLogo;
@@ -43,14 +46,50 @@ public class PanelLogin extends JPanel {
 
         userText = new JTextField(20);
         userText.setText("Gebruikersnaam");
+        userText.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if ("Gebruikersnaam".equals(userText.getText())) {
+                    userText.setText("");
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+
+        });
         p.add(userText);
 
         passwordText = new JPasswordField(20);
         passwordText.setText("Wachtwoord");
         passwordText.addActionListener(new EventLogin());
+        passwordText.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if ("Wachtwoord".equals(passwordText.getText())) {
+                    passwordText.setText("");
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+
+        });
         p.add(passwordText);
 
-        login = new JButton("Aanmelden");
+        login = new Button("Aanmelden");
         login.addActionListener(new EventLogin());
         p.add(login);
         this.add(new PanelLogo());

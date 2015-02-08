@@ -33,6 +33,8 @@ public class ButtonBorder implements Border {
     public Insets getBorderInsets(Component c) {
         if (c.getName() == "-") {
             return new Insets(20, 10, 20, 10);
+        } else if (c.getName() == "2") {
+            return new Insets(10, 10, 10, 10);
         }
         return new Insets(3, 3, 3, 3);
     }

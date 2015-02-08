@@ -6,6 +6,7 @@
 package org.friet.net.levering.panel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import org.friet.net.UI.Button;
 import org.friet.net.UI.Table;
 import org.friet.net.UI.icons.Icone;
 import org.friet.net.main.Main;
@@ -47,34 +49,34 @@ public class PanelLevering extends JPanel {
         JPanel p1 = new JPanel(new BorderLayout());
         JPanel p = new JPanel(new GridLayout(1, 4));
 
-        list = new Table(new DefaultTableModel(new Object[]{"Artiekel:", "Hoevelheid"}, 0));
+        list = new Table(new DefaultTableModel(new Object[]{"Artikel:", "Aantal"}, 0));
         scroll = new JScrollPane(list);
         p1.add(scroll);
 
-        delete = new JButton("");
+        delete = new Button("");
         delete.setVisible(true);
         delete.addActionListener(event);
         delete.setName("-");
         delete.setIcon(new Icone("Delete"));
         p.add(delete);
 
-        cansel = new JButton("");
+        confirm = new Button("");
+        confirm.setVisible(true);
+        confirm.addActionListener(event);
+        confirm.setIcon(new Icone("Multi"));
+        p.add(confirm);
+
+        cansel = new Button("");
         cansel.setVisible(true);
         cansel.addActionListener(event);
         cansel.setIcon(new Icone("Cancel"));
         p.add(cansel);
 
-        nieuweKlant = new JButton("");
+        nieuweKlant = new Button("");
         nieuweKlant.setVisible(true);
         nieuweKlant.addActionListener(event);
         nieuweKlant.setIcon(new Icone("Confirm"));
         p.add(nieuweKlant);
-
-        confirm = new JButton("");
-        confirm.setVisible(true);
-        confirm.addActionListener(event);
-        confirm.setIcon(new Icone("Multi"));
-        p.add(confirm);
 
         tabs = new JTabbedPane();
         tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -86,10 +88,13 @@ public class PanelLevering extends JPanel {
 
             tabs.addTab("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style='font-size:20px'><p>" + key + "<p></body></html>", panel);
             for (String naam : items.get(key).keySet()) {
-                JButton btn = new JButton("<html><body style='font-size:20px'><p>" + naam + "<p></body></html>");
+                Button btn = new Button("<html><body style='font-size:20px'><p>" + naam + "<p></body></html>");
 
                 btn.setVisible(true);
                 btn.addActionListener(event);
+                Color c = Main.db.randomKleur();
+                btn.setBackground(c);
+                btn.setC2(c);
                 panel.add(btn);
             }
 
@@ -108,7 +113,7 @@ public class PanelLevering extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if (e.getSource().getClass() == JButton.class) {
+            if (e.getSource().getClass() == Button.class) {
                 if (e.getActionCommand().startsWith("<html><body style='font-size:20px'><p>") && selected == -1) {
                     String[] str = e.getActionCommand().split("<p>");
                     if (select) {
@@ -135,7 +140,7 @@ public class PanelLevering extends JPanel {
                 }
 
                 if (e.getSource() == cansel) {
-                    list.setModel(new DefaultTableModel(new Object[]{"Wat:", "Hoeveelheid"}, 0));
+                    list.setModel(new DefaultTableModel(new Object[]{"Artikel:", "Aantal"}, 0));
                 }
 
                 if (e.getSource() == nieuweKlant) {
@@ -145,7 +150,7 @@ public class PanelLevering extends JPanel {
                             Vector is = (Vector) i;
                             Main.db.addItem((String) is.toArray()[0], (float) Float.parseFloat(is.toArray()[1].toString()));
                         }
-                        list.setModel(new DefaultTableModel(new Object[]{"Wat:", "Hoeveelheid"}, 0));
+                        list.setModel(new DefaultTableModel(new Object[]{"Artikel:", "Aantal"}, 0));
                     }
                 }
             }

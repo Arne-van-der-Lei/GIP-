@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import org.friet.net.UI.Button;
 import org.friet.net.main.Main;
 
 /**
@@ -26,17 +27,21 @@ public class Popup extends JFrame {
 
     public Popup(String ok) {
         this.str = ok;
-        JPanel p = new JPanel(new GridLayout(6, 1));
+        GridLayout g = new GridLayout(6, 1);
+        g.setVgap(5);
+        JPanel p = new JPanel(g);
+
         ipfield = new JTextField();
         p.add(ipfield);
-
-        buttons = new JButton[12];
+        GridLayout g2 = new GridLayout(1, 3);
+        g2.setHgap(5);
+        buttons = new Button[12];
         int x = 9;
         for (int i = 1; i <= 3; i++) {
-            JPanel p1 = new JPanel(new GridLayout(1, 3));
+            JPanel p1 = new JPanel(g2);
             for (int j = 1; j <= 3; j++) {
 
-                JButton b = new JButton(x + "");
+                JButton b = new Button(x + "");
                 b.addActionListener(new Event());
                 p1.add(b);
                 buttons[9 - x] = b;
@@ -44,22 +49,22 @@ public class Popup extends JFrame {
             }
             p.add(p1);
         }
-        JPanel p1 = new JPanel(new GridLayout(1, 3));
+        JPanel p1 = new JPanel(g2);
 
-        JButton b = new JButton("0");
+        JButton b = new Button("0");
         b.addActionListener(new Event());
         buttons[9] = b;
         p1.add(b);
-        JButton b1 = new JButton("00");
+        JButton b1 = new Button("00");
         b1.addActionListener(new Event());
         buttons[10] = b1;
         p1.add(b1);
-        JButton b2 = new JButton("C");
+        JButton b2 = new Button("C");
         b2.addActionListener(new Event());
         buttons[11] = b2;
         p1.add(b2);
         p.add(p1);
-        this.ok = new JButton("OK");
+        this.ok = new Button("OK");
         this.ok.addActionListener(new Event());
         p.add(this.ok);
         this.add(p);

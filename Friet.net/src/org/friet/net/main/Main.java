@@ -5,8 +5,7 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
+import org.friet.net.UI.Menu;
 import org.friet.net.UI.UI;
 import org.friet.net.database.Database;
 import org.friet.net.login.panel.PanelLogin;
@@ -51,10 +50,9 @@ public class Main extends JFrame {
         frameLogin.setAlwaysOnTop(true);
         frameLogin.setResizable(false);
         //TODO: uitroepteken + manager
-        while (panel.done) {
+        while (!panel.done) {
 
         }
-        Main.manager = true;
 
         frameLogin.setVisible(false);
         return false;
@@ -69,30 +67,30 @@ public class Main extends JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setBounds(0,0,600,600);
         
-        Event event = new Event();
-        
         menu = new JMenuBar();
         menu.setMaximumSize(new Dimension(10, 100));
         
-        JMenu levering = new JMenu("Levering");
-        levering.addMenuListener(event);
+        JMenu levering = new Menu("Levering");
         levering.setVisible(true);
         
-        JMenu Bestelling = new JMenu("Bestelling");
-        Bestelling.addMenuListener(event);
+        JMenu Bestelling = new Menu("Bestelling");
         Bestelling.setVisible(true);
 
         menu.add(Bestelling);
         menu.add(levering);
 
         if (Main.manager) {
-            JMenu Werknemer = new JMenu("Werknemer");
-            Werknemer.addMenuListener(event);
+            JMenu Werknemer = new Menu("Werknemer");
             Werknemer.setVisible(true);
 
             menu.add(Werknemer);
+
+            menu.getMenu(2).setBorderPainted(false);
         }
-        
+
+        menu.getMenu(0).setBorderPainted(true);
+        menu.getMenu(1).setBorderPainted(false);
+
         menu.setVisible(true);
         this.setJMenuBar(menu);
         
@@ -103,36 +101,5 @@ public class Main extends JFrame {
         this.setVisible(true);
         this.revalidate();
         this.repaint();
-        //System.out.println(Main.frame.main.levering.cansel.getBounds());
-    }
-    
-    public class Event implements MenuListener {
-
-        @Override
-        public void menuSelected(MenuEvent e) {
-            if (e.getSource() == menu.getMenu(0)) {
-                Main.frame.main.bestelling.setVisible(true);
-                Main.frame.main.levering.setVisible(false);
-                Main.frame.main.werknemers.setVisible(false);
-            } else if (e.getSource() == menu.getMenu(1)) {
-                Main.frame.main.bestelling.setVisible(false);
-                Main.frame.main.levering.setVisible(true);
-                Main.frame.main.werknemers.setVisible(false);
-            } else if (e.getSource() == menu.getMenu(2)) {
-                Main.frame.main.bestelling.setVisible(false);
-                Main.frame.main.levering.setVisible(false);
-                Main.frame.main.werknemers.setVisible(true);
-                
-            }
-        }
-
-        @Override
-        public void menuDeselected(MenuEvent e) {
-        }
-
-        @Override
-        public void menuCanceled(MenuEvent e) {
-        }
-
     }
 }

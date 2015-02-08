@@ -25,7 +25,7 @@ public class UI {
     public static final Color orangje = new Color(81, 70, 0);
     public static final Color grijs = new Color(0, 62, 107);
     public static final Color grijs2 = new Color(145, 145, 145);
-    
+
     public static void setUIFont (FontUIResource f, ColorUIResource c){
         Enumeration keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
@@ -56,15 +56,17 @@ public class UI {
 
         //menubar
         UIManager.put("MenuBar.background", new ColorUIResource(new Color(45, 45, 45)));
-        UIManager.put("MenuBar.gradient", list(new ColorUIResource(new Color(23, 81, 203))));
+        UIManager.put("MenuBar.gradient", list(new ColorUIResource(grijs)));
         UIManager.put("MenuBar.borderColor", new ColorUIResource(geel));
         UIManager.put("MenuBar.border", new BBorder());
         
         //menu
         UIManager.put("Menu.border", new MenuBorder());
-        UIManager.put("Menu.selectionBackground", new ColorUIResource(geel));
+        UIManager.put("Menu.selectionBackground", new ColorUIResource(grijs));
+        UIManager.put("Menu.selectionForeground", new ColorUIResource(Color.white));
         UIManager.put("Menu.borderColor", new ColorUIResource(geel));
-        UIManager.put("Menu.font", new FontUIResource("calibri", Font.PLAIN, 16));
+        UIManager.put("Menu.font", new FontUIResource("calibri", Font.BOLD, 18));
+        UIManager.put("Menu.preserveTopLevelSelection", false);
         
         //paneel
         UIManager.put("Panel.background", new ColorUIResource(new Color(255, 255, 255)));
@@ -80,6 +82,9 @@ public class UI {
         UIManager.put("Button.enabledBorderColor", new ColorUIResource(orangje));
         UIManager.put("Button.disabledText", new ColorUIResource(new Color(10, 10, 10)));
         UIManager.put("Button.font", new FontUIResource("calibri", Font.PLAIN, 16));
+        UIManager.put("Button.-background", new ColorUIResource(grijs));
+        UIManager.put("Button.hoverBackground", new ColorUIResource(grijs2));
+
         
         //tabbedPane
         UIManager.put("TabbedPane.borderHightlightColor",new ColorUIResource(orangje));
@@ -106,6 +111,8 @@ public class UI {
         //Table
         UIManager.put("Table.background", new ColorUIResource(grijs2));
         UIManager.put("Table.scrollPaneBorder", new NoBorder());
+        UIManager.put("Table.foreground", new ColorUIResource(Color.black));
+        UIManager.put("Table.font", new FontUIResource("calibri", Font.BOLD, 14));
 
         //TextField
         UIManager.put("TextField.foreground", new ColorUIResource(new Color(0, 0, 0)));

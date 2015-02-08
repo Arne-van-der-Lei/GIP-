@@ -39,17 +39,21 @@ public class MainPanel extends JPanel {
         bestelling = new PanelBestelling();
         levering = new PanelLevering();
         werknemers = new PanelWerknemers();
+        levering.setVisible(false);
         werknemers.setVisible(false);
         bestelling.setVisible(false);
         levering.setVisible(false);
         footer.setVisible(true);
 
-        centerPanel.add(levering, "1");
         centerPanel.add(bestelling, "2");
+        centerPanel.add(levering, "1");
         centerPanel.add(werknemers, "2");
         this.add(centerPanel);
         this.add(footer, BorderLayout.SOUTH);
 
+        bestelling.setVisible(true);
+        levering.setVisible(false);
+        werknemers.setVisible(false);
     }
 
     @Override
