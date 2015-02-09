@@ -39,7 +39,7 @@ public class UI {
                 UIManager.put (key, c);
             }
             if (key.toString().startsWith("Table.") && value != null) {
-                System.out.println(key + " --- " + value.toString());
+                //System.out.println(key + " --- " + value.toString());
             }
         }
     } 
@@ -72,8 +72,8 @@ public class UI {
         UIManager.put("Panel.background", new ColorUIResource(new Color(255, 255, 255)));
         
         //Option pane
-        UIManager.put("OptionPane.background", new ColorUIResource(new Color(0,0,0)));
-        UIManager.put("OptionPane.messageForeground", new ColorUIResource(new Color(255,255,255)));
+        UIManager.put("OptionPane.background", new ColorUIResource(new Color(255, 255, 255)));
+        UIManager.put("OptionPane.messageForeground", new ColorUIResource(Color.black));
         
         //Button
         UIManager.put("Button.gradient", list(new ColorUIResource(grijs)));

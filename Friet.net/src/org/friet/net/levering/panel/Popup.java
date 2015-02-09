@@ -3,6 +3,7 @@
  */
 package org.friet.net.levering.panel;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,6 +33,7 @@ public class Popup extends JFrame {
         JPanel p = new JPanel(g);
 
         ipfield = new JTextField();
+        ipfield.setFont(new Font("calibri", Font.BOLD, 20));
         p.add(ipfield);
         GridLayout g2 = new GridLayout(1, 3);
         g2.setHgap(5);

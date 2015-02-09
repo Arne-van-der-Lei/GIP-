@@ -86,6 +86,32 @@ public class Database {
         return 0;
     }
 
+    public int checkPass(String scan) {
+
+        Statement stat;
+        ResultSet set;
+
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT scann,manager,loginid FROM login");
+            set = stat.getResultSet();
+            while (set.next()) {
+                String naam = set.getString("scann");
+                Main.Werknemmersnummer = set.getInt("loginid");
+                if (naam.toUpperCase().equals(scan.toUpperCase())) {
+                    if (set.getBoolean("manager")) {
+                        return 2;
+                    }
+                    return 1;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return 0;
+    }
+
     public TreeMap<String, TreeMap<String, Float>> getItems() {
 
         TreeMap<String, TreeMap<String, Float>> items;

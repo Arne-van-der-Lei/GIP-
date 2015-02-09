@@ -119,6 +119,7 @@ public class PanelWerknemers extends JPanel {
                                 vv.get(7) + "",
                                 vv.get(6) + "",
                                 new Integer(vv.get(0).toString()));
+
                     } else {
                         Main.db.addwerknemer(
                                 vv.get(2) + "",
@@ -131,7 +132,12 @@ public class PanelWerknemers extends JPanel {
                                 vv.get(6) + "");
                     }
                 }
-
+                werknemersInfo = Main.db.getwerknemers();
+                model.setRowCount(0);
+                for (Object s : werknemersInfo) {
+                    TreeMap<String, String> map = (TreeMap<String, String>) s;
+                    model.addRow(map.values().toArray());
+                }
             }
         }
 

@@ -2,6 +2,9 @@ package org.friet.net.main;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -20,18 +23,37 @@ public class Main extends JFrame {
     public static boolean manager;
     public static int Werknemmersnummer;
     public static int Klantnummer;
-    
-    
+    public static String s;
+    public static boolean scann = false;
+
     public static void main(String[] args) {
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+            private String s;
+
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                if (KeyEvent.KEY_RELEASED == e.getID()) {
+                    if (KeyEvent.VK_ENTER == e.getKeyCode()) {
+                        Main.s = s;
+                        Main.scann(s);
+                        s = "";
+                    } else {
+                        s += e.getKeyChar();
+                    }
+                }
+                return false;
+            }
+        });
+
         UI.setLAF();
-        
+
         InitDB();
 
-        while (login()) {
+        while (login() & !scann) {
         }
 
         frame = new Main();
-        
+
     }
 
     private static void InitDB() {
@@ -50,29 +72,28 @@ public class Main extends JFrame {
         frameLogin.setAlwaysOnTop(true);
         frameLogin.setResizable(false);
         //TODO: uitroepteken + manager
-        while (!panel.done) {
+        while (!panel.done ) {
 
         }
 
         frameLogin.setVisible(false);
         return false;
     }
-    
-    public Main(){
-        this.setLayout(new GridLayout(1,1));
-        
+
+    public Main() {
+        this.setLayout(new GridLayout(1, 1));
+
         this.setName("Friet.net");
         this.setTitle("Friet.net");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setBounds(0,0,600,600);
-        
+        this.setBounds(0, 0, 600, 600);
         menu = new JMenuBar();
         menu.setMaximumSize(new Dimension(10, 100));
-        
+
         JMenu levering = new Menu("Levering");
         levering.setVisible(true);
-        
+
         JMenu Bestelling = new Menu("Bestelling");
         Bestelling.setVisible(true);
 
@@ -93,13 +114,19 @@ public class Main extends JFrame {
 
         menu.setVisible(true);
         this.setJMenuBar(menu);
-        
+
         main = new MainPanel();
         main.setVisible(true);
         this.add(main);
-        
+
         this.setVisible(true);
         this.revalidate();
         this.repaint();
+    }
+
+    public static void scann(String s) {
+        if (Main.frame != null) {
+
+        }
     }
 }

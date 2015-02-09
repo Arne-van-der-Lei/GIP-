@@ -172,7 +172,7 @@ public class PanelBestelling extends JPanel {
                             Vector is = (Vector) i;
                             writer.println(is.get(0) + " --- " + is.get(2) + " euro");
                             
-                            float i2 = (float) Float.parseFloat(is.get(2).toString());
+                            float i2 = new Float(is.get(2).toString());
                         }
                         
                         writer.close();
