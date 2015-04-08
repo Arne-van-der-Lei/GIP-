@@ -1,3 +1,12 @@
-  friet klein ---       2,00 euro
-  friet klein ---       2,00 euro
-  friet middel ---       2,40 euro
+  coctail ---       0,70 euro
+  coctail ---       0,70 euro
+  americain ---       0,70 euro
+  pickels ---       0,70 euro
+  frikandel ---       2,60 euro
+  frikandel ---       2,60 euro
+  mini loempias ---       2,50 euro
+  ribster ---       2,50 euro
+  vuurvreter ---       2,70 euro
+  appelsap ---       2,00 euro
+  appelsap ---       2,00 euro
+  friet groot ---       3,00 euro

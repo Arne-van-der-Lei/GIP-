@@ -2,6 +2,7 @@ package org.friet.net.database;
 
 import java.awt.Color;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -488,24 +489,38 @@ public class Database {
     }
 
     public Map<String, Object> getBestellingen() {
-        Map<String, Object> hallo = new HashMap<String, Object>();
+        Map<String, Object> hallo = new TreeMap<String, Object>(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                if (o1.split("||")[0].equals("")) {
+                    return -1;
+                }
+                if (o2.split("||")[0].equals("")) {
+                    return -1;
+                }
+                Date date1 = new Date(Long.parseLong(o1.split("||")[0], 10));
+                Date date2 = new Date(Long.parseLong(o2.split("||")[0], 10));
+                return -date1.compareTo(date2);
+            }
+        });
         Statement stat;
         ResultSet set;
         try {
             stat = con.createStatement();
-            stat.execute("SELECT Bestelling.VerkoopDatum, Item.PrijsPerItem, Item.Naam, ItemsBestelling.BestellingID, ItemsBestelling.ItemID\n"
-                    + "FROM Werknemer INNER JOIN (Item INNER JOIN (Bestelling INNER JOIN ItemsBestelling ON Bestelling.BestellingID = ItemsBestelling.BestellingID) ON Item.ItemID = ItemsBestelling.ItemID) ON Werknemer.WerknemerID = Bestelling.WerknemerID;");
+            stat.execute("SELECT Bestelling.Totaalprijs, Bestelling.VerkoopDatum, Item.Naam, Item.ItemID, ItemsBestelling.BestellingID\n"
+                    + "FROM Item INNER JOIN (Bestelling INNER JOIN ItemsBestelling ON Bestelling.BestellingID = ItemsBestelling.BestellingID) ON Item.ItemID = ItemsBestelling.ItemID\n"
+                    + "ORDER BY Bestelling.VerkoopDatum;");
             set = stat.getResultSet();
             while (set.next()) {
                 Map<String, String> hash;
                 hash = new HashMap<String, String>();
-                String naam = set.getString("naam");
-                hash.put("verkoopdatum", set.getString("verkoopdatum"));
-                hash.put("prijs", set.getString("PrijsPerItem"));
-                hash.put("naam", naam);
-                hallo.put(set.getString("BestellingID") + naam, hash);
+                Date naam = set.getDate("verkoopdatum");
+                hash.put("verkoopdatum", naam.toString());
+                hash.put("prijs", set.getString("Totaalprijs"));
+                hash.put("naam", set.getString("Naam"));
+                System.out.println(naam.getTime());
+                hallo.put(naam.getTime() + "||" + set.getString("BestellingID") + set.getString("ItemID"), hash);
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
