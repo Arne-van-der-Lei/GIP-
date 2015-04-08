@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -234,16 +235,22 @@ public class Database {
         }
     }
 
-    public void addBestelling(int klantId, int werknemerId, float totaalprijs) {
+    public int addBestelling(int werknemerId, float totaalprijs) {
+        int out = 0;
         Statement stat;
         ResultSet set;
         try {
             stat = con.createStatement();
-            stat.execute("insert into bestelling(KlantID,WerknemerID,Totaalprijs) values(" + klantId + "," + werknemerId + "," + totaalprijs + ")");
+            stat.execute("insert into bestelling(WerknemerID,Totaalprijs,VerkoopDatum) values(" + werknemerId + "," + totaalprijs + ",NOW())");
+            stat.execute("Select BestellingId FROM bestelling");
             set = stat.getResultSet();
+            while (set.next()) {
+                out = set.getInt("BestellingId");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return out;
     }
 
     public void addKlant(String email, String naam) {
@@ -315,6 +322,7 @@ public class Database {
                 TreeMap<String, String> hash;
                 hash = new TreeMap<>(new Comparator<String>() {
                     public String[] ok = new String[]{"Werknemer ID", "Voornaam", "Naam", "Adres", "Postcode", "Gemeente", "Telefoonnummer", "E-mail"};
+
                     @Override
                     public int compare(String o1, String o2) {
                         int first = 1, last = 1;
@@ -334,13 +342,48 @@ public class Database {
                 });
                 hash.put("Voornaam", set.getString("voornaam"));
                 hash.put("Adres", set.getString("adres"));
-                hash.put("Gemeente",  set.getString("gemeente"));
+                hash.put("Gemeente", set.getString("gemeente"));
                 hash.put("E-mail", set.getString("emailadres"));
                 hash.put("Werknemer ID", set.getString("WerknemerID"));
                 hash.put("Naam", set.getString("naam"));
-                hash.put("Postcode",  set.getString("postcode"));
-                hash.put("Telefoonnummer",  set.getString("telefoonnummer"));
+                hash.put("Postcode", set.getString("postcode"));
+                hash.put("Telefoonnummer", set.getString("telefoonnummer"));
                 hallo.add(hash);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return hallo;
+    }
+
+    public Map<String, Object> getInfoItems() {
+
+        Map<String, Object> hallo = new HashMap<String, Object>();
+        Statement stat;
+        ResultSet set;
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT * FROM Item,Soort WHERE Item.soort = Soort.soortID");
+            set = stat.getResultSet();
+            while (set.next()) {
+                Map<String, String> hash;
+                hash = new HashMap<String, String>();
+                String naam = set.getString("Naam");
+                String cat = set.getString("categorienaam");
+                hash.put("naam", naam);
+                hash.put("prijs per item", set.getString("PrijsPerItem"));
+                hash.put("hoeveelheid per item", set.getString("HoeveelheidperItem"));
+
+                if (hallo.get(cat) == null) {
+                    Map<String, Object> hash2 = new HashMap<String, Object>();
+                    hash2.put(naam, hash);
+                    hash2.put("naam", cat);
+                    hallo.put(cat, hash2);
+                } else {
+                    ((Map<String, Object>) hallo.get(cat)).put(naam, hash);
+                }
             }
 
         } catch (SQLException ex) {
@@ -371,5 +414,102 @@ public class Database {
             rand = 0;
         }
         return (Color) hallo.get(rand);
+    }
+
+    public String getnaam(String s) {
+        Statement stat;
+        ResultSet set;
+        String out = "";
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT Naam,barcode FROM Item,Barcodes ORDER BY Item.ItemId");
+            set = stat.getResultSet();
+            while (set.next()) {
+                if (set.getString("barcode").equals(s)) {
+                    out = set.getString("Naam");
+                }
+            }
+            set.close();
+            stat.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return out;
+
+    }
+
+    public String getnaaml(String s) {
+        Statement stat;
+        ResultSet set;
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT SoortNaam FROM Inhoud,barcodes WHERE barcodes.barcode='" + s + "' ORDER BY Inhoud.SoortId");
+            set = stat.getResultSet();
+            while (set.next()) {
+                s = set.getString("SoortNaam");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
+
+    }
+
+    public void addItemBestelling(int naam, int amount) {
+        Statement stat;
+        ResultSet set;
+        System.out.println(naam + " " + amount);
+        try {
+            stat = con.createStatement();
+            stat.execute("INSERT INTO ItemsBestelling (ItemId,BestellingId) VALUES (" + naam + "," + amount + ")");
+            stat.closeOnCompletion();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public int getIdFromItemName(String name) {
+        Statement stat;
+        ResultSet set;
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT ItemID FROM Item WHERE Item.naam = '" + name + "'");
+            stat.closeOnCompletion();
+            set = stat.getResultSet();
+            while (set.next()) {
+                return set.getInt("ItemId");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public Map<String, Object> getBestellingen() {
+        Map<String, Object> hallo = new HashMap<String, Object>();
+        Statement stat;
+        ResultSet set;
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT Bestelling.VerkoopDatum, Item.PrijsPerItem, Item.Naam, ItemsBestelling.BestellingID, ItemsBestelling.ItemID\n"
+                    + "FROM Werknemer INNER JOIN (Item INNER JOIN (Bestelling INNER JOIN ItemsBestelling ON Bestelling.BestellingID = ItemsBestelling.BestellingID) ON Item.ItemID = ItemsBestelling.ItemID) ON Werknemer.WerknemerID = Bestelling.WerknemerID;");
+            set = stat.getResultSet();
+            while (set.next()) {
+                Map<String, String> hash;
+                hash = new HashMap<String, String>();
+                String naam = set.getString("naam");
+                hash.put("verkoopdatum", set.getString("verkoopdatum"));
+                hash.put("prijs", set.getString("PrijsPerItem"));
+                hash.put("naam", naam);
+                hallo.put(set.getString("BestellingID") + naam, hash);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return hallo;
     }
 }

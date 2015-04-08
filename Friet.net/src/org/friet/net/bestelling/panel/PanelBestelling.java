@@ -11,6 +11,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.PrintWriter;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -24,6 +26,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import org.friet.net.UI.Button;
+import org.friet.net.UI.NETableModel;
 import org.friet.net.UI.Table;
 import org.friet.net.UI.icons.Icone;
 import org.friet.net.main.Main;
@@ -41,6 +44,7 @@ public class PanelBestelling extends JPanel {
     public JTextField ipfield;
     public JButton delete, cansel, nieuweKlant, confirm;
     public float prijs = 0;
+    public boolean allowsBar = false;
 
     public PanelBestelling() {
 
@@ -51,7 +55,7 @@ public class PanelBestelling extends JPanel {
         this.setLayout(new BorderLayout());
 
         JPanel p = new JPanel(new BorderLayout());
-        model = new DefaultTableModel(new Object[]{"Artikel", "Aantal", "Prijs"}, 0);
+        model = new NETableModel(new Object[]{"Artikel", "Aantal", "Prijs"}, 0);
         table = new Table(model);
         
         list = new JScrollPane(table);
@@ -118,6 +122,27 @@ public class PanelBestelling extends JPanel {
         }
         this.add(p, BorderLayout.EAST);
         this.add(tabs, BorderLayout.CENTER);
+        this.addComponentListener(new ComponentListener() {
+
+            @Override
+            public void componentResized(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentShown(ComponentEvent e) {
+                allowsBar = true;
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent e) {
+                allowsBar = false;
+            }
+
+        });
     }
 
     protected void getItems() {
@@ -126,6 +151,19 @@ public class PanelBestelling extends JPanel {
 
     public void UpdateText(float i) {
         ipfield.setText("Totaal prijs: €" + String.format("%10.2f", prijs));
+    }
+
+    public void barcode(String s) {
+        for (TreeMap<String, Float> key : items.values()) {
+            for (String naam : key.keySet()) {
+                if (naam.equals(Main.db.getnaam(s))) {
+                    float f = key.get(naam);
+                    model.addRow(new Object[]{"  " + naam, "   " + 1, String.format("%10.2f", f)});
+                    prijs += f;
+                    UpdateText(prijs);
+                }
+            }
+        }
     }
 
     public class Event implements ActionListener {
@@ -151,7 +189,7 @@ public class PanelBestelling extends JPanel {
                     int[] ints = table.getSelectedRows();
 
                     for (int i : ints) {
-                        prijs -= new Float(((Vector) model.getDataVector().get(i)).get(2).toString());
+                        prijs -= new Float(((Vector) model.getDataVector().get(i)).get(2).toString().replace(",", "."));
                         model.removeRow(i);
                         UpdateText(prijs);
                     }
@@ -172,7 +210,7 @@ public class PanelBestelling extends JPanel {
                             Vector is = (Vector) i;
                             writer.println(is.get(0) + " --- " + is.get(2) + " euro");
                             
-                            float i2 = new Float(is.get(2).toString());
+                            float i2 = new Float(is.get(2).toString().replace(",", "."));
                         }
                         
                         writer.close();
@@ -182,11 +220,13 @@ public class PanelBestelling extends JPanel {
                     
                     int bool = JOptionPane.showConfirmDialog(nieuweKlant, prijs, "Einde klant", 0);
                     if (bool == 0) {
+                        int bestellingID = Main.db.addBestelling( Main.Werknemmersnummer, prijs);
                         for (Object i : model.getDataVector().toArray()) {
                             Vector i2 = (Vector) i;
-                            Main.db.verminderItem((String) i2.get(0));
+                            Main.db.verminderItem(((String) i2.get(0)).split("  ")[1]);
+                            Main.db.addItemBestelling(Main.db.getIdFromItemName(i2.get(0).toString().split("  ")[1]), bestellingID);
                         }
-                        Main.db.addBestelling(Main.Klantnummer, Main.Werknemmersnummer, prijs);
+                        
                         Main.Klantnummer++;
                         model.setRowCount(0);
                         prijs = 0;

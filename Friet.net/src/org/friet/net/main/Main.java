@@ -103,15 +103,25 @@ public class Main extends JFrame {
         if (Main.manager) {
             JMenu Werknemer = new Menu("Werknemer");
             Werknemer.setVisible(true);
+            JMenu Info = new Menu("Artikelen");
+            Info.setVisible(true);
 
             menu.add(Werknemer);
+            menu.add(Info);
 
             menu.getMenu(2).setBorderPainted(false);
+            menu.getMenu(3).setBorderPainted(false);
         }
 
         menu.getMenu(0).setBorderPainted(true);
         menu.getMenu(1).setBorderPainted(false);
 
+        JMenu infoBestellingen = new Menu("Info Bestellingen");
+        infoBestellingen.setVisible(true);
+
+        menu.add(infoBestellingen);
+
+        menu.getMenu(4).setBorderPainted(false);
         menu.setVisible(true);
         this.setJMenuBar(menu);
 
@@ -120,13 +130,15 @@ public class Main extends JFrame {
         this.add(main);
 
         this.setVisible(true);
-        this.revalidate();
-        this.repaint();
     }
 
     public static void scann(String s) {
         if (Main.frame != null) {
-
+            if (Main.frame.main.levering.allowsBar) {
+                Main.frame.main.levering.barcode(s);
+            } else if (Main.frame.main.bestelling.allowsBar) {
+                Main.frame.main.bestelling.barcode(s);
+            }
         }
     }
 }

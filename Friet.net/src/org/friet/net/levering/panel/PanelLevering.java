@@ -10,6 +10,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -21,6 +23,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import org.friet.net.UI.Button;
+import org.friet.net.UI.NETableModel;
 import org.friet.net.UI.Table;
 import org.friet.net.UI.icons.Icone;
 import org.friet.net.main.Main;
@@ -38,6 +41,7 @@ public class PanelLevering extends JPanel {
     public int selected = -1;
     public JTabbedPane tabs;
     public boolean select;
+    public boolean allowsBar = false;
 
     public PanelLevering() {
 
@@ -49,7 +53,7 @@ public class PanelLevering extends JPanel {
         JPanel p1 = new JPanel(new BorderLayout());
         JPanel p = new JPanel(new GridLayout(1, 4));
 
-        list = new Table(new DefaultTableModel(new Object[]{"Artikel:", "Aantal"}, 0));
+        list = new Table(new NETableModel(new Object[]{"Artikel:", "Aantal"}, 0));
         scroll = new JScrollPane(list);
         p1.add(scroll);
 
@@ -102,10 +106,41 @@ public class PanelLevering extends JPanel {
         p1.add(p, BorderLayout.SOUTH);
         this.add(tabs);
         this.add(p1, BorderLayout.EAST);
+        this.addComponentListener(new ComponentListener() {
+
+            @Override
+            public void componentResized(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentShown(ComponentEvent e) {
+                allowsBar = true;
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent e) {
+                allowsBar = false;
+            }
+
+        });
     }
 
     protected void getItems() {
         items = Main.db.getInhoud();
+    }
+
+    public void barcode(String s) {
+        s = (String) Main.db.getnaaml(s);
+        if (select) {
+            Popup.Create(s);
+        } else {
+            ((DefaultTableModel) list.getModel()).addRow(new Object[]{s, 1});
+        }
+        select = false;
     }
 
     public class Event implements ActionListener {

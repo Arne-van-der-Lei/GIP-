@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import org.friet.net.bestelling.panel.PanelBestelling;
+import org.friet.net.info.panels.PanelBestellingen;
+import org.friet.net.info.panels.PanelItems;
 import org.friet.net.info.panels.PanelWerknemers;
 import org.friet.net.levering.panel.PanelLevering;
 
@@ -25,6 +27,8 @@ public class MainPanel extends JPanel {
     public PanelBestelling bestelling;
     public PanelLevering levering;
     public PanelWerknemers werknemers;
+    public PanelBestellingen InfoBestellingen;
+    public PanelItems items;
     public JPanel centerPanel;
 
     public MainPanel() {
@@ -39,21 +43,26 @@ public class MainPanel extends JPanel {
         bestelling = new PanelBestelling();
         levering = new PanelLevering();
         werknemers = new PanelWerknemers();
+        InfoBestellingen = new PanelBestellingen();
+        items = new PanelItems();
+
         levering.setVisible(false);
         werknemers.setVisible(false);
         bestelling.setVisible(false);
+        InfoBestellingen.setVisible(false);
         levering.setVisible(false);
         footer.setVisible(true);
 
-        centerPanel.add(bestelling, "2");
-        centerPanel.add(levering, "1");
-        centerPanel.add(werknemers, "2");
+        centerPanel.add(bestelling, "1");
+        centerPanel.add(levering, "2");
+        centerPanel.add(werknemers, "3");
+        centerPanel.add(items, "4");
+        centerPanel.add(InfoBestellingen, "4");
+
         this.add(centerPanel);
         this.add(footer, BorderLayout.SOUTH);
 
         bestelling.setVisible(true);
-        levering.setVisible(false);
-        werknemers.setVisible(false);
     }
 
     @Override

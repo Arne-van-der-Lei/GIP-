@@ -1,0 +1,5 @@
+  friet middel ---       2,40 euro
+  friet middel ---       2,40 euro
+  friet klein ---       2,00 euro
+  friet groot ---       3,00 euro
+  friet klein ---       2,00 euro

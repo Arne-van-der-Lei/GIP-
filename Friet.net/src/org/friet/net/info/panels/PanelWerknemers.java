@@ -12,6 +12,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -89,6 +91,31 @@ public class PanelWerknemers extends JPanel {
 
         this.add(p1, BorderLayout.NORTH);
         this.add(select);
+        this.addComponentListener(new ComponentListener() {
+
+            @Override
+            public void componentResized(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentShown(ComponentEvent e) {
+                model.setRowCount(0);
+                werknemersInfo = Main.db.getwerknemers();
+                for (Object s : werknemersInfo) {
+                    TreeMap<String, String> map = (TreeMap<String, String>) s;
+                    model.addRow(map.values().toArray());
+                }
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent e) {
+            }
+
+        });
     }
 
     private class Event implements ActionListener {
