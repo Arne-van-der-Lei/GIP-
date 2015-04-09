@@ -24,7 +24,7 @@ public class UI {
     public static final Color geel = new Color(255, 229, 0);
     public static final Color orangje = new Color(81, 70, 0);
     public static final Color grijs = new Color(0, 62, 107);
-    public static final Color grijs2 = new Color(145, 145, 145);
+    public static final Color grijs2 = new Color(190, 190, 190);
 
     public static void setUIFont (FontUIResource f, ColorUIResource c){
         Enumeration keys = UIManager.getDefaults().keys();

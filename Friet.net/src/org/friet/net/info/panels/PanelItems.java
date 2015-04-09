@@ -34,16 +34,21 @@ public class PanelItems extends JPanel {
     public PanelItems() {
         this.setLayout(new BorderLayout());
         items = new HashMap<String, Object>();
-        items = Main.db.getInfoItems();
         soorten = new JTabbedPane();
-
-        JPanel p2 = new JPanel(new BorderLayout());
-        JPanel p3 = new JPanel(new BorderLayout());
-        p2.add(p3);
 
         list = new Table(new DefaultTableModel(new Object[]{"", ""}, 0));
         scroll = new JScrollPane(list);
-        p3.add(scroll);
+
+        refresh();
+
+        this.add(scroll, BorderLayout.EAST);
+        this.add(soorten);
+
+    }
+
+    public void refresh() {
+        items = Main.db.getInfoItems();
+        soorten.removeAll();
 
         for (Object soortt : items.keySet()) {
             Map<String, Object> soort = (Map<String, Object>) items.get(soortt);
@@ -59,11 +64,22 @@ public class PanelItems extends JPanel {
                     p.add(button);
                 }
             }
+
+            Button button = new Button("+");
+            button.addActionListener(new Event());
+            Color c = Main.db.randomKleur();
+            button.setBackground(c);
+            button.setC2(c);
+            button.setName("add");
+            p.add(button);
+
             p.setName("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style='font-size:20px'><p>" + soort.get("naam") + "<p></body></html>");
             soorten.addTab("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style='font-size:20px'><p>" + soort.get("naam") + "<p></body></html>", p);
         }
-        this.add(p2, BorderLayout.EAST);
-        this.add(soorten);
+
+        JPanel p = new JPanel(new GridLayout(5, 5));
+        p.setName("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style='font-size:20px'><p>+</p></body></html>");
+        soorten.addTab("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style='font-size:20px'><p>+<p></body></html>", p);
 
     }
 
@@ -71,17 +87,19 @@ public class PanelItems extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (false) {
+            if (e.getSource().getClass() == Button.class) {
+                Button b = (Button) e.getSource();
+                if (b.getName().equals("add")) {
 
-            } else {
-                ((DefaultTableModel) list.getModel()).setRowCount(0);
-                Map<String, String> map = (Map<String, String>) ((Map<String, Object>) items.get(soorten.getSelectedComponent().toString().split("<p>")[1])).get(((JButton) e.getSource()).getText());
-                System.out.println(((JButton) e.getSource()).getText());
-                for (String s : map.keySet()) {
-                    ((DefaultTableModel) list.getModel()).addRow(new Object[]{s, map.get(s)});
+                } else {
+                    ((DefaultTableModel) list.getModel()).setRowCount(0);
+                    Map<String, String> map = (Map<String, String>) ((Map<String, Object>) items.get(soorten.getSelectedComponent().toString().split("<p>")[1])).get(((JButton) e.getSource()).getText());
+                    System.out.println(((JButton) e.getSource()).getText());
+                    for (String s : map.keySet()) {
+                        ((DefaultTableModel) list.getModel()).addRow(new Object[]{s, map.get(s)});
+                    }
                 }
             }
-
         }
     }
 }
