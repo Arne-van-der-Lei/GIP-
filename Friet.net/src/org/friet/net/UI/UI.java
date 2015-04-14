@@ -85,7 +85,6 @@ public class UI {
         UIManager.put("Button.-background", new ColorUIResource(grijs));
         UIManager.put("Button.hoverBackground", new ColorUIResource(grijs2));
 
-        
         //tabbedPane
         UIManager.put("TabbedPane.borderHightlightColor",new ColorUIResource(orangje));
         UIManager.put("TabbedPane.darkShadow", new ColorUIResource(new Color(10,10,10)));
@@ -128,6 +127,8 @@ public class UI {
         //combobox 
         UIManager.put("ComboBox.foreground", new ColorUIResource(new Color(0, 0, 0)));
 
+        //label
+        UIManager.put("Label.foreground", new ColorUIResource(new Color(0, 0, 0)));
     }
     
     

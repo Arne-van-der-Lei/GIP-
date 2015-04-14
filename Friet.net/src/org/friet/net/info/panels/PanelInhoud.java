@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableModel;
 import org.friet.net.UI.Button;
 import org.friet.net.UI.Table;
@@ -24,7 +26,7 @@ import org.friet.net.main.PopupV2;
  *
  * @author arne
  */
-public class PanelItems extends JPanel {
+public class PanelInhoud extends JPanel {
 
     private JTabbedPane soorten;
     private JPanel p3;
@@ -32,7 +34,7 @@ public class PanelItems extends JPanel {
     public Table list;
     public Map<String, Object> items;
 
-    public PanelItems() {
+    public PanelInhoud() {
         this.setLayout(new BorderLayout());
         items = new HashMap<String, Object>();
         soorten = new JTabbedPane();
@@ -48,7 +50,7 @@ public class PanelItems extends JPanel {
     }
 
     public void refresh() {
-        items = Main.db.getInfoItems();
+        items = Main.db.getInfoInhoud();
         soorten.removeAll();
 
         for (Object soortt : items.keySet()) {
@@ -82,7 +84,7 @@ public class PanelItems extends JPanel {
         JPanel p = new JPanel(new GridLayout(5, 5));
         p.setName("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style='font-size:20px'><p>+</p></body></html>");
         soorten.addTab("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style='font-size:20px'><p>+<p></body></html>", p);
-
+        soorten.addAncestorListener(new Event2());
     }
 
     private class Event implements ActionListener {
@@ -91,17 +93,37 @@ public class PanelItems extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().getClass() == Button.class) {
                 Button b = (Button) e.getSource();
+                System.out.println(b.getName());
                 if (b.getName().startsWith("add")) {
-                    PopupV2 popup = new PopupV2(false, 3, b.getName().split(" ")[1]);
+                    PopupV2 popup = new PopupV2(true, 2, b.getName().split(" ")[1]);
                 } else {
                     ((DefaultTableModel) list.getModel()).setRowCount(0);
-                    Map<String, String> map = (Map<String, String>) ((Map<String, Object>) items.get(soorten.getSelectedComponent().toString().split("<p>")[1])).get(((JButton) e.getSource()).getText());
+                    Map<String, String> map = (Map<String, String>) ((Map<String, Object>) items.get(soorten.getSelectedComponent().getName().split("<p>")[1])).get(((JButton) e.getSource()).getText());
                     System.out.println(((JButton) e.getSource()).getText());
                     for (String s : map.keySet()) {
                         ((DefaultTableModel) list.getModel()).addRow(new Object[]{s, map.get(s)});
                     }
                 }
             }
+        }
+    }
+
+    private class Event2 implements AncestorListener {
+
+        @Override
+        public void ancestorAdded(AncestorEvent event) {
+            System.out.println(event.getComponent().getName());
+            if (event.getComponent().getName().split("<p>")[1].equals("+")) {
+                PopupV2 popup = new PopupV2(true, 1, " ");
+            }
+        }
+
+        @Override
+        public void ancestorRemoved(AncestorEvent event) {
+        }
+
+        @Override
+        public void ancestorMoved(AncestorEvent event) {
         }
     }
 }

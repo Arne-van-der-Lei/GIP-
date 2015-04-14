@@ -460,7 +460,6 @@ public class Database {
     public void addItemBestelling(int naam, int amount) {
         Statement stat;
         ResultSet set;
-        System.out.println(naam + " " + amount);
         try {
             stat = con.createStatement();
             stat.execute("INSERT INTO ItemsBestelling (ItemId,BestellingId) VALUES (" + naam + "," + amount + ")");
@@ -526,5 +525,123 @@ public class Database {
         }
 
         return hallo;
+    }
+
+    public void addNewItem(String naam, String HoeveelheidPerItem, String Prijs, String Inhoud, String soortnaam) {
+        Statement stat;
+        ResultSet set;
+        int inhoudID = 0;
+        int SoortID = 0;
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT inhoud.SoortId, inhoud.SoortNaam\n"
+                    + "FROM inhoud\n"
+                    + "WHERE (((inhoud.SoortNaam)=" + Inhoud + "));");
+            set = stat.getResultSet();
+            while (set.next()) {
+                inhoudID = set.getInt("SoortId");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT Soort.SoortId, Soort.SoortNaam\n"
+                    + "FROM Soort\n"
+                    + "WHERE (((Soort.SoortNaam)=" + soortnaam + "));");
+            set = stat.getResultSet();
+            while (set.next()) {
+                SoortID = set.getInt("SoortId");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            stat = con.createStatement();
+            stat.execute("INSERT INTO Item ( Naam, PrijsPerItem, Soort, SoortId, HoeveelheidPerItem )\n"
+                    + "VALUES ('" + naam + "', " + Prijs + ", " + SoortID + ", " + inhoudID + ", " + HoeveelheidPerItem + ")");
+            stat.closeOnCompletion();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Map<String, Object> getInfoInhoud() {
+
+        Map<String, Object> hallo = new HashMap<String, Object>();
+        Statement stat;
+        ResultSet set;
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT inhoud.SoortNaam, inhoud.Hoeveelheid, Soort.CategorieNaam\n"
+                    + "FROM Soort INNER JOIN inhoud ON Soort.SoortID = inhoud.Categorie;");
+            set = stat.getResultSet();
+            while (set.next()) {
+                Map<String, String> hash;
+                hash = new HashMap<String, String>();
+                String naam = set.getString("SoortNaam");
+                String cat = set.getString("CategorieNaam");
+                hash.put("naam", naam);
+                hash.put("Hoeveelheid", set.getString("Hoeveelheid"));
+
+                if (hallo.get(cat) == null) {
+                    Map<String, Object> hash2 = new HashMap<String, Object>();
+                    hash2.put(naam, hash);
+                    hash2.put("naam", cat);
+                    hallo.put(cat, hash2);
+                } else {
+                    ((Map<String, Object>) hallo.get(cat)).put(naam, hash);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return hallo;
+    }
+
+    public void addNewInhoud(String text, String text0, String soortnaam) {
+        Statement stat;
+        ResultSet set;
+        int SoortID = 0;
+
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT Soort.SoortId, Soort.SoortNaam\n"
+                    + "FROM Soort\n"
+                    + "WHERE (((Soort.SoortNaam)=" + soortnaam + "));");
+            set = stat.getResultSet();
+            while (set.next()) {
+                SoortID = set.getInt("SoortId");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            stat = con.createStatement();
+            stat.execute("INSERT INTO Inhoud ( Categorie, Soortnaam, Hoeveelheid)\n"
+                    + "VALUES (" + SoortID + ", '" + text + "', " + text0 + ")");
+            stat.closeOnCompletion();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void addNewSoort(String text) {
+        Statement stat;
+        ResultSet set;
+
+        try {
+            stat = con.createStatement();
+            stat.execute("INSERT INTO Soort ( Soortnaam )\n"
+                    + "VALUES ('" + text + "')");
+            stat.closeOnCompletion();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

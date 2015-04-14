@@ -105,12 +105,16 @@ public class Main extends JFrame {
             Werknemer.setVisible(true);
             JMenu Info = new Menu("Artikelen");
             Info.setVisible(true);
+            JMenu Inhoud = new Menu("Inhoud");
+            Inhoud.setVisible(true);
 
             menu.add(Werknemer);
             menu.add(Info);
+            menu.add(Inhoud);
 
             menu.getMenu(2).setBorderPainted(false);
             menu.getMenu(3).setBorderPainted(false);
+            menu.getMenu(4).setBorderPainted(false);
         }
 
         menu.getMenu(0).setBorderPainted(true);
@@ -121,7 +125,7 @@ public class Main extends JFrame {
 
         menu.add(infoBestellingen);
 
-        menu.getMenu(4).setBorderPainted(false);
+        menu.getMenu(5).setBorderPainted(false);
         menu.setVisible(true);
         this.setJMenuBar(menu);
 
