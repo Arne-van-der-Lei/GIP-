@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -38,7 +39,7 @@ public class PopupV2 extends JFrame {
         g2.setVgap(10);
         JPanel p = new JPanel(g2);
         if (inhoud) {
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < (soort == 1 ? 1 : 2); i++) {
                 GridLayout g = new GridLayout(1, 2);
                 g.setVgap(10);
                 JPanel p2 = new JPanel(g);
@@ -70,18 +71,13 @@ public class PopupV2 extends JFrame {
                 p.add(p2);
             }
         }
-        
+        this.setSize(400, 200);
         button.addActionListener(new Event());
         p.setBorder(new EmptyBorder(10, 10, 10, 10));
         p.add(button);
         this.add(p);
 
         this.setVisible(true);
-        if (soort == 1) {
-            this.setSize(100, 200);
-        } else {
-            this.setSize(400, 200);
-        }
     }
 
     public void drop() {
@@ -93,15 +89,23 @@ public class PopupV2 extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            String error = "";
             if (soort == 3) {
                 if (!inhoud) {
-                    Main.db.addNewItem(text.get(0).getText(), text.get(1).getText(), text.get(2).getText(), text.get(3).getText(), soortnaam);
+                    error = Main.db.addNewItem(text.get(0).getText(), text.get(1).getText(), text.get(2).getText(), text.get(3).getText(), soortnaam);
                 } else {
-                    Main.db.addNewInhoud(text.get(0).getText(), text.get(1).getText(), soortnaam);
+                    error = Main.db.addNewInhoud(text.get(0).getText(), text.get(1).getText(), soortnaam);
                 }
             } else {
-                Main.db.addNewSoort(text.get(0).getText());
+                error = Main.db.addNewSoort(text.get(0).getText());
+                error += Main.db.addNewInhoud("Inhoud item", "1", text.get(0).getText());
+                error += Main.db.addNewItem("Item", "1", "1", "Inhoud item", text.get(0).getText());
             }
+            
+            JOptionPane.showMessageDialog(null, error);
+
+            Main.frame.main.Inhoud.refresh();
+            Main.frame.main.items.refresh();
         }
     }
 }

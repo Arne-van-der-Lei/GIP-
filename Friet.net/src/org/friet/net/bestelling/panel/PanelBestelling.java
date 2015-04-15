@@ -102,21 +102,25 @@ public class PanelBestelling extends JPanel {
             tabs.addTab("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style=\"font-size:20px\"><p>" + key + "<p></body></html>", panel);
             int x = -1;
             int y = 0;
-            for (String naam : ((TreeMap<String, Float>) items.get(key)).keySet()) {
-                x++;
-                Button btn = new Button("<html><body style=\"font-size:20px\"><p>" + naam + "<p></body></html>");
-                btn.setName(naam);
-                btn.setVisible(true);
-                btn.addActionListener(event);
-                Color c = Main.db.randomKleur();
-                btn.setBackground(c);
-                btn.setC2(c);
-                panel.add(btn);
+            try {
+                for (String naam : ((TreeMap<String, Float>) items.get(key)).keySet()) {
+                    x++;
+                    Button btn = new Button("<html><body style=\"font-size:20px\"><p>" + naam + "<p></body></html>");
+                    btn.setName(naam);
+                    btn.setVisible(true);
+                    btn.addActionListener(event);
+                    Color c = Main.db.randomKleur();
+                    btn.setBackground(c);
+                    btn.setC2(c);
+                    panel.add(btn);
 
-                if (x == 5) {
-                    x = -1;
-                    y++;
+                    if (x == 5) {
+                        x = -1;
+                        y++;
+                    }
                 }
+            } catch (Exception e) {
+
             }
 
         }

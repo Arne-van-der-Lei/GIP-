@@ -24,6 +24,7 @@ public class Database {
 
     private int rand = 0;
     public Connection con;
+    private static ArrayList hallo = new ArrayList();
 
     public Database() {
 
@@ -36,6 +37,20 @@ public class Database {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        Statement stat;
+        ResultSet set;
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT * FROM kleur ORDER BY ID");
+            set = stat.getResultSet();
+            while (set.next()) {
+                hallo.add(new Color(set.getInt("r"), set.getInt("g"), set.getInt("b")));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -122,7 +137,7 @@ public class Database {
 
             @Override
             public int compare(String o1, String o2) {
-                int first = 1, last = 1;
+                int first = 5000, last = 5000;
 
                 for (int i = 0; i < ok.length; i++) {
                     if (o1.equals(ok[i])) {
@@ -173,7 +188,7 @@ public class Database {
 
             @Override
             public int compare(String o1, String o2) {
-                int first = 1, last = 1;
+                int first = 5000, last = 5000;
 
                 for (int i = 0; i < ok.length; i++) {
                     if (o1.equals(ok[i])) {
@@ -395,26 +410,15 @@ public class Database {
     }
 
     public Color randomKleur() {
-
-        ArrayList hallo = new ArrayList();
-        Statement stat;
-        ResultSet set;
-        try {
-            stat = con.createStatement();
-            stat.execute("SELECT * FROM kleur ORDER BY ID");
-            set = stat.getResultSet();
-            while (set.next()) {
-                hallo.add(new Color(set.getInt("r"), set.getInt("g"), set.getInt("b")));
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-        }
         rand++;
         if (rand == hallo.size()) {
             rand = 0;
         }
-        return (Color) hallo.get(rand);
+        try {
+            return (Color) hallo.get(rand);
+        } catch (Exception e) {
+            return new Color(rand, rand, rand);
+        }
     }
 
     public String getnaam(String s) {
@@ -527,16 +531,16 @@ public class Database {
         return hallo;
     }
 
-    public void addNewItem(String naam, String HoeveelheidPerItem, String Prijs, String Inhoud, String soortnaam) {
+    public String addNewItem(String naam, String HoeveelheidPerItem, String Prijs, String Inhoud, String soortnaam) {
         Statement stat;
         ResultSet set;
-        int inhoudID = 0;
-        int SoortID = 0;
+        int inhoudID = -1;
+        int SoortID = -1;
         try {
             stat = con.createStatement();
             stat.execute("SELECT inhoud.SoortId, inhoud.SoortNaam\n"
                     + "FROM inhoud\n"
-                    + "WHERE (((inhoud.SoortNaam)=" + Inhoud + "));");
+                    + "WHERE (((inhoud.SoortNaam)='" + Inhoud + "'));");
             set = stat.getResultSet();
             while (set.next()) {
                 inhoudID = set.getInt("SoortId");
@@ -544,12 +548,14 @@ public class Database {
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        if (inhoudID == -1) {
+            return "Faute ingave van veld Inhoud. In did veld moet de naam van de Inhoud staan waraan hij gelinkt staat.";
+        }
         try {
             stat = con.createStatement();
-            stat.execute("SELECT Soort.SoortId, Soort.SoortNaam\n"
+            stat.execute("SELECT Soort.SoortId, Soort.CategorieNaam\n"
                     + "FROM Soort\n"
-                    + "WHERE (((Soort.SoortNaam)=" + soortnaam + "));");
+                    + "WHERE (((Soort.CategorieNaam)='" + soortnaam + "'));");
             set = stat.getResultSet();
             while (set.next()) {
                 SoortID = set.getInt("SoortId");
@@ -564,8 +570,9 @@ public class Database {
                     + "VALUES ('" + naam + "', " + Prijs + ", " + SoortID + ", " + inhoudID + ", " + HoeveelheidPerItem + ")");
             stat.closeOnCompletion();
         } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return "Kon het Item niet Toevoegen aan de database probeer opnieuw.";
         }
+        return "Kon het item goed toevoegen.";
     }
 
     public Map<String, Object> getInfoInhoud() {
@@ -603,16 +610,16 @@ public class Database {
         return hallo;
     }
 
-    public void addNewInhoud(String text, String text0, String soortnaam) {
+    public String addNewInhoud(String text, String text0, String soortnaam) {
         Statement stat;
         ResultSet set;
         int SoortID = 0;
 
         try {
             stat = con.createStatement();
-            stat.execute("SELECT Soort.SoortId, Soort.SoortNaam\n"
+            stat.execute("SELECT Soort.SoortId, Soort.CategorieNaam\n"
                     + "FROM Soort\n"
-                    + "WHERE (((Soort.SoortNaam)=" + soortnaam + "));");
+                    + "WHERE (((Soort.CategorieNaam)='" + soortnaam + "'));");
             set = stat.getResultSet();
             while (set.next()) {
                 SoortID = set.getInt("SoortId");
@@ -627,21 +634,72 @@ public class Database {
                     + "VALUES (" + SoortID + ", '" + text + "', " + text0 + ")");
             stat.closeOnCompletion();
         } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return "Kon de inhoud niet toevoegen aan de Database.";
         }
+        return "Kon de inhoud sucsessvol toevoegen aan de database.";
     }
 
-    public void addNewSoort(String text) {
+    public String addNewSoort(String text) {
         Statement stat;
         ResultSet set;
 
         try {
             stat = con.createStatement();
-            stat.execute("INSERT INTO Soort ( Soortnaam )\n"
+            stat.execute("INSERT INTO Soort ( Categorienaam )\n"
                     + "VALUES ('" + text + "')");
             stat.closeOnCompletion();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return "Kon de Soort niet toevoegen aan de Database.";
         }
+        return "Kon de Soort sucsessvol toevoegen aan de database.";
+    }
+
+    public String removeSoort(String Naam) {
+        Statement stat;
+        ResultSet set;
+
+        try {
+            stat = con.createStatement();
+            stat.execute("DELETE FROM Soort\n"
+                    + "WHERE CategorieNaam='" + Naam + "';");
+            stat.closeOnCompletion();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return "Kon het Soort niet verwijderen van de Database.";
+        }
+        return "Kon het Soort sucsessvol verwijderen van database.";
+    }
+
+    public String removeInhoud(String Naam) {
+        Statement stat;
+        ResultSet set;
+
+        try {
+            stat = con.createStatement();
+            stat.execute("DELETE FROM inhoud\n"
+                    + "WHERE SoortNaam='" + Naam + "';");
+            stat.closeOnCompletion();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return "Kon het inhoud niet verwijderen van de Database.";
+        }
+        return "Kon het inhoud sucsessvol verwijderen van database.";
+    }
+
+    public String removeItem(String Naam) {
+        Statement stat;
+        ResultSet set;
+
+        try {
+            stat = con.createStatement();
+            stat.execute("DELETE FROM Item\n"
+                    + "WHERE Naam='" + Naam + "';");
+            stat.closeOnCompletion();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return "Kon het Item niet verwijderen van de Database.";
+        }
+        return "Kon het Item sucsessvol verwijderen van database.";
     }
 }

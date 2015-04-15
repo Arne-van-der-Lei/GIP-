@@ -91,15 +91,19 @@ public class PanelLevering extends JPanel {
             panel.setLayout(new GridLayout(5, 5));
 
             tabs.addTab("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style='font-size:20px'><p>" + key + "<p></body></html>", panel);
-            for (String naam : items.get(key).keySet()) {
-                Button btn = new Button("<html><body style='font-size:20px'><p>" + naam + "<p></body></html>");
+            try {
+                for (String naam : items.get(key).keySet()) {
+                    Button btn = new Button("<html><body style='font-size:20px'><p>" + naam + "<p></body></html>");
 
-                btn.setVisible(true);
-                btn.addActionListener(event);
-                Color c = Main.db.randomKleur();
-                btn.setBackground(c);
-                btn.setC2(c);
-                panel.add(btn);
+                    btn.setVisible(true);
+                    btn.addActionListener(event);
+                    Color c = Main.db.randomKleur();
+                    btn.setBackground(c);
+                    btn.setC2(c);
+                    panel.add(btn);
+                }
+            } catch (Exception e) {
+
             }
 
         }

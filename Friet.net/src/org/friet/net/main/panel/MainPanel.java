@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import org.friet.net.bestelling.panel.PanelBestelling;
 import org.friet.net.info.panels.PanelBestellingen;
-import org.friet.net.info.panels.PanelInhoud;
 import org.friet.net.info.panels.PanelItems;
 import org.friet.net.info.panels.PanelWerknemers;
 import org.friet.net.levering.panel.PanelLevering;
@@ -30,7 +29,7 @@ public class MainPanel extends JPanel {
     public PanelWerknemers werknemers;
     public PanelBestellingen InfoBestellingen;
     public PanelItems items;
-    public PanelInhoud Inhoud;
+    public PanelItems Inhoud;
     public JPanel centerPanel;
 
     public MainPanel() {
@@ -46,8 +45,8 @@ public class MainPanel extends JPanel {
         levering = new PanelLevering();
         werknemers = new PanelWerknemers();
         InfoBestellingen = new PanelBestellingen();
-        items = new PanelItems();
-        Inhoud = new PanelInhoud();
+        items = new PanelItems(true);
+        Inhoud = new PanelItems(false);
 
         levering.setVisible(false);
         werknemers.setVisible(false);
