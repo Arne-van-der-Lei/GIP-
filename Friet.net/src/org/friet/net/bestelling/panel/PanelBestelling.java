@@ -42,6 +42,7 @@ public class PanelBestelling extends JPanel {
     public DefaultTableModel model;
     public Table table;
     public JTextField ipfield;
+    public JTabbedPane tabs;
     public JButton delete, cansel, nieuweKlant, confirm;
     public float prijs = 0;
     public boolean allowsBar = false;
@@ -92,7 +93,7 @@ public class PanelBestelling extends JPanel {
         nieuweKlant.setIcon(new Icone("Confirm"));
         p1.add(nieuweKlant);
 
-        JTabbedPane tabs = new JTabbedPane();
+        tabs = new JTabbedPane();
         tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         for (String key : items.keySet()) {
 
@@ -168,6 +169,44 @@ public class PanelBestelling extends JPanel {
                 }
             }
         }
+    }
+
+    public void refresh() {
+        getItems();
+        this.remove(tabs);
+        tabs = new JTabbedPane();
+        tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        for (String key : items.keySet()) {
+
+            JPanel panel = new JPanel(new GridLayout(7, 7));
+
+            panel.setVisible(true);
+            tabs.addTab("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style=\"font-size:20px\"><p>" + key + "<p></body></html>", panel);
+            int x = -1;
+            int y = 0;
+            try {
+                for (String naam : ((TreeMap<String, Float>) items.get(key)).keySet()) {
+                    x++;
+                    Button btn = new Button("<html><body style=\"font-size:20px\"><p>" + naam + "<p></body></html>");
+                    btn.setName(naam);
+                    btn.setVisible(true);
+                    btn.addActionListener(new Event());
+                    Color c = Main.db.randomKleur();
+                    btn.setBackground(c);
+                    btn.setC2(c);
+                    panel.add(btn);
+
+                    if (x == 5) {
+                        x = -1;
+                        y++;
+                    }
+                }
+            } catch (Exception e) {
+
+            }
+
+        }
+        this.add(tabs, BorderLayout.CENTER);
     }
 
     public class Event implements ActionListener {

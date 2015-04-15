@@ -32,10 +32,11 @@ public class PanelItems extends JPanel {
     private JTabbedPane soorten;
     private JPanel p3;
     public JScrollPane scroll;
-    public Button remove;
+    public Button remove, Save;
     public Table list;
     public Map<String, Object> items;
     private boolean item;
+    private String currentSelected = "";
 
     public PanelItems(boolean item) {
         this.item = item;
@@ -46,15 +47,21 @@ public class PanelItems extends JPanel {
 
         list = new Table(new DefaultTableModel(new Object[]{"", ""}, 0));
         scroll = new JScrollPane(list);
-        JPanel p = new JPanel(new BorderLayout());
+        JPanel p3 = new JPanel(new BorderLayout());
+        JPanel p2 = new JPanel(new GridLayout(1, 2));
 
         remove = new Button("Remove");
         remove.addActionListener(new Event3());
+        
+        Save = new Button("Save");
+        Save.addActionListener(new Event4());
         refresh();
 
-        p.add(scroll);
-        p.add(remove, BorderLayout.SOUTH);
-        this.add(p, BorderLayout.EAST);
+        p3.add(scroll);
+        p3.add(p2, BorderLayout.SOUTH);
+        p2.add(remove);
+        p2.add(Save);
+        this.add(p3, BorderLayout.EAST);
         this.add(soorten);
     }
 
@@ -120,8 +127,9 @@ public class PanelItems extends JPanel {
                     Map<String, String> map = (Map<String, String>) ((Map<String, Object>) items.get(soorten.getSelectedComponent().toString().split("<p>")[1])).get(((JButton) e.getSource()).getText());
                     System.out.println(((JButton) e.getSource()).getText());
                     for (String s : map.keySet()) {
-                        ((DefaultTableModel) list.getModel()).addRow(new Object[]{s, map.get(s)});
+                        ((DefaultTableModel) list.getModel()).addRow(new Object[]{s, map.get(s).replace('.', ',')});
                     }
+                    currentSelected = map.get("naam");
                 }
             }
         }
@@ -137,11 +145,11 @@ public class PanelItems extends JPanel {
             }
             ((DefaultTableModel) list.getModel()).setRowCount(0);
             ((DefaultTableModel) list.getModel()).addRow(new Object[]{"Naam", name.split("<p>")[1]});
+            currentSelected = name.split("<p>")[1];
         }
     }
 
     private class Event3 implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             String Error;
@@ -159,7 +167,35 @@ public class PanelItems extends JPanel {
             }
             Main.frame.main.Inhoud.refresh();
             Main.frame.main.items.refresh();
+            Main.frame.main.bestelling.refresh();
+            Main.frame.main.levering.refresh();
         }
+    }
 
+    private class Event4 implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String Error;
+            String NaamNieuw = ((DefaultTableModel) list.getModel()).getValueAt(list.getModel().getRowCount() - 1, 1).toString();
+            int result = JOptionPane.showConfirmDialog(null, "Wilt u " + currentSelected + " opslaan?", "Save", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                if (((DefaultTableModel) list.getModel()).getRowCount() == 1) {
+                    Error = Main.db.updateSoort(currentSelected, NaamNieuw);
+                } else if (((DefaultTableModel) list.getModel()).getRowCount() == 2) {
+                    String HoeveelHeidNieuw = ((DefaultTableModel) list.getModel()).getValueAt(list.getModel().getRowCount() - 2, 1).toString();
+                    Error = Main.db.updateInhoud(currentSelected, NaamNieuw, HoeveelHeidNieuw);
+                } else {
+                    String HoeveelheidPerItem = ((DefaultTableModel) list.getModel()).getValueAt(list.getModel().getRowCount() - 2, 1).toString();
+                    String PrijsPerItem = ((DefaultTableModel) list.getModel()).getValueAt(list.getModel().getRowCount() - 3, 1).toString();
+                    Error = Main.db.updateItem(currentSelected, NaamNieuw, HoeveelheidPerItem, PrijsPerItem);
+                }
+                JOptionPane.showMessageDialog(null, Error);
+            }
+            Main.frame.main.Inhoud.refresh();
+            Main.frame.main.items.refresh();
+            Main.frame.main.bestelling.refresh();
+            Main.frame.main.levering.refresh();
+        }
     }
 }

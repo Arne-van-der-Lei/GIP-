@@ -147,6 +147,37 @@ public class PanelLevering extends JPanel {
         select = false;
     }
 
+    public void refresh() {
+        getItems();
+        this.remove(tabs);
+        tabs = new JTabbedPane();
+        tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        for (String key : items.keySet()) {
+
+            JPanel panel = new JPanel(false);
+            panel.setVisible(true);
+            panel.setLayout(new GridLayout(5, 5));
+
+            tabs.addTab("<html><body leftmargin=20 topmargin=12 marginwidth=20 marginheight=8 style='font-size:20px'><p>" + key + "<p></body></html>", panel);
+            try {
+                for (String naam : items.get(key).keySet()) {
+                    Button btn = new Button("<html><body style='font-size:20px'><p>" + naam + "<p></body></html>");
+
+                    btn.setVisible(true);
+                    btn.addActionListener(new Event());
+                    Color c = Main.db.randomKleur();
+                    btn.setBackground(c);
+                    btn.setC2(c);
+                    panel.add(btn);
+                }
+            } catch (Exception e) {
+
+            }
+
+        }
+        this.add(tabs);
+    }
+
     public class Event implements ActionListener {
 
         @Override

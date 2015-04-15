@@ -682,9 +682,9 @@ public class Database {
             stat.closeOnCompletion();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-            return "Kon het inhoud niet verwijderen van de Database.";
+            return "Kon de inhoud niet verwijderen van de Database.";
         }
-        return "Kon het inhoud sucsessvol verwijderen van database.";
+        return "Kon de inhoud sucsessvol verwijderen van database.";
     }
 
     public String removeItem(String Naam) {
@@ -701,5 +701,54 @@ public class Database {
             return "Kon het Item niet verwijderen van de Database.";
         }
         return "Kon het Item sucsessvol verwijderen van database.";
+    }
+
+    public String updateSoort(String currentSelected, String NaamNieuw) {
+        Statement stat;
+        ResultSet set;
+
+        try {
+            stat = con.createStatement();
+            stat.execute("UPDATE Item, soort SET soort.CategorieNaam = '" + NaamNieuw + "'\n"
+                    + "WHERE (([Soort].[CategorieNaam]='" + currentSelected + "'));");
+            stat.closeOnCompletion();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return "Kon de soort niet Opslaan.";
+        }
+        return "Kon de soort sucsessvol opslaan.";
+    }
+
+
+    public String updateInhoud(String currentSelected, String NaamNieuw, String HoeveelHeidNieuw) {
+        Statement stat;
+        ResultSet set;
+
+        try {
+            stat = con.createStatement();
+            stat.execute("UPDATE inhoud SET inhoud.SoortNaam = '" + NaamNieuw + "', inhoud.Hoeveelheid = '" + HoeveelHeidNieuw + "' "
+                    + "WHERE (([inhoud].[SoortNaam])='" + currentSelected + "')");
+            stat.closeOnCompletion();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return "Kon de Inhoud niet Opslaan.";
+        }
+        return "Kon de Inhoud sucsessvol opslaan.";
+    }
+
+    public String updateItem(String currentSelected, String NaamNieuw, String HoeveelheidPerItem, String PrijsPerItem) {
+        Statement stat;
+        ResultSet set;
+
+        try {
+            stat = con.createStatement();
+            stat.execute("UPDATE Item SET Item.Naam = '"+NaamNieuw+"', Item.HoeveelheidPerItem = '"+HoeveelheidPerItem+"', Item.PrijsPerItem = '"+PrijsPerItem+"'\n"
+                    + "WHERE (([Item].[Naam]='"+currentSelected+"'));");
+            stat.closeOnCompletion();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return "Kon de Item niet Opslaan.";
+        }
+        return "Kon de Item sucsessvol opslaan.";
     }
 }
