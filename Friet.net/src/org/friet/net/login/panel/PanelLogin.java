@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -107,6 +108,7 @@ public class PanelLogin extends JPanel {
                 switch (maybe) {
                     case 0:
                         done = false;
+                        JOptionPane.showMessageDialog(null, "Faute username of passwoord. Probeer opnieuw.");
                         break;
                     case 1:
                         done = true;

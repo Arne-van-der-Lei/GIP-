@@ -8,7 +8,7 @@ public class PanelFooter extends JPanel {
     public JLabel labelFooterText;
 
     public PanelFooter() {
-        labelFooterText = new JLabel("Gemaakt door Arne van der lei");
+        labelFooterText = new JLabel("Gemaakt door Arne van der Lei GIP 2014 - 2015");
 
         labelFooterText.setVisible(true);
 

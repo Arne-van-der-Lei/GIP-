@@ -182,13 +182,15 @@ public class PanelItems extends JPanel {
             if (result == JOptionPane.YES_OPTION) {
                 if (((DefaultTableModel) list.getModel()).getRowCount() == 1) {
                     Error = Main.db.updateSoort(currentSelected, NaamNieuw);
-                } else if (((DefaultTableModel) list.getModel()).getRowCount() == 2) {
+                } else if (((DefaultTableModel) list.getModel()).getRowCount() == 3) {
                     String HoeveelHeidNieuw = ((DefaultTableModel) list.getModel()).getValueAt(list.getModel().getRowCount() - 2, 1).toString();
-                    Error = Main.db.updateInhoud(currentSelected, NaamNieuw, HoeveelHeidNieuw);
+                    String Barcode = ((DefaultTableModel) list.getModel()).getValueAt(list.getModel().getRowCount() - 3, 1).toString();
+                    Error = Main.db.updateInhoud(currentSelected, NaamNieuw, HoeveelHeidNieuw, Barcode);
                 } else {
                     String HoeveelheidPerItem = ((DefaultTableModel) list.getModel()).getValueAt(list.getModel().getRowCount() - 2, 1).toString();
                     String PrijsPerItem = ((DefaultTableModel) list.getModel()).getValueAt(list.getModel().getRowCount() - 3, 1).toString();
-                    Error = Main.db.updateItem(currentSelected, NaamNieuw, HoeveelheidPerItem, PrijsPerItem);
+                    String Barcode = ((DefaultTableModel) list.getModel()).getValueAt(list.getModel().getRowCount() - 4, 1).toString();
+                    Error = Main.db.updateItem(currentSelected, NaamNieuw, HoeveelheidPerItem, PrijsPerItem, Barcode);
                 }
                 JOptionPane.showMessageDialog(null, Error);
             }

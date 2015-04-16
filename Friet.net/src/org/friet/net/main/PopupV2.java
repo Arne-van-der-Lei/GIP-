@@ -23,8 +23,8 @@ import org.friet.net.UI.Button;
  */
 public class PopupV2 extends JFrame {
 
-    private List<String> naamen = Arrays.asList("Naam", "HoeveelheidPerItem", "Prijs", "Inhoud");
-    private List<String> naamenInhoud = Arrays.asList("Naam", "Hoeveelheid");
+    private List<String> naamen = Arrays.asList("Naam", "HoeveelheidPerItem", "Prijs", "Inhoud", "Barcode");
+    private List<String> naamenInhoud = Arrays.asList("Naam", "Hoeveelheid", "Barcode");
     private List<JTextField> text = new ArrayList<JTextField>();
     private Button button = new Button("OK");
     private String soortnaam;
@@ -35,11 +35,11 @@ public class PopupV2 extends JFrame {
         this.soort = soort;
         this.soortnaam = soortnaam;
         this.inhoud = inhoud;
-        GridLayout g2 = new GridLayout(5, 1);
+        GridLayout g2 = new GridLayout(6, 1);
         g2.setVgap(10);
         JPanel p = new JPanel(g2);
         if (inhoud) {
-            for (int i = 0; i < (soort == 1 ? 1 : 2); i++) {
+            for (int i = 0; i < (soort == 1 ? 1 : 3); i++) {
                 GridLayout g = new GridLayout(1, 2);
                 g.setVgap(10);
                 JPanel p2 = new JPanel(g);
@@ -55,7 +55,7 @@ public class PopupV2 extends JFrame {
                 p.add(p2);
             }
         } else {
-            for (int i = 0; i < (soort == 1 ? 1 : 4); i++) {
+            for (int i = 0; i < (soort == 1 ? 1 : 5); i++) {
                 GridLayout g = new GridLayout(1, 2);
                 g.setVgap(10);
                 JPanel p2 = new JPanel(g);
@@ -71,7 +71,7 @@ public class PopupV2 extends JFrame {
                 p.add(p2);
             }
         }
-        this.setSize(400, 200);
+        this.setSize(400, 300);
         button.addActionListener(new Event());
         p.setBorder(new EmptyBorder(10, 10, 10, 10));
         p.add(button);
@@ -92,14 +92,14 @@ public class PopupV2 extends JFrame {
             String error = "";
             if (soort == 3) {
                 if (!inhoud) {
-                    error = Main.db.addNewItem(text.get(0).getText(), text.get(1).getText(), text.get(2).getText(), text.get(3).getText(), soortnaam);
+                    error = Main.db.addNewItem(text.get(0).getText(), text.get(1).getText(), text.get(2).getText(), text.get(3).getText(), text.get(4).getText(), soortnaam);
                 } else {
-                    error = Main.db.addNewInhoud(text.get(0).getText(), text.get(1).getText(), soortnaam);
+                    error = Main.db.addNewInhoud(text.get(0).getText(), text.get(1).getText(), text.get(2).getText(), soortnaam);
                 }
             } else {
                 error = Main.db.addNewSoort(text.get(0).getText());
-                error += Main.db.addNewInhoud("Inhoud item", "1", text.get(0).getText());
-                error += Main.db.addNewItem("Item", "1", "1", "Inhoud item", text.get(0).getText());
+                error += Main.db.addNewInhoud("Inhoud item", "1", "1", text.get(0).getText());
+                error += Main.db.addNewItem("Item", "1", "1", "Inhoud item", "1", text.get(0).getText());
             }
             
             JOptionPane.showMessageDialog(null, error);

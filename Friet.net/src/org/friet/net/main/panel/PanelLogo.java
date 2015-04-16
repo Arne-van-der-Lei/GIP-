@@ -3,7 +3,8 @@ package org.friet.net.main.panel;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -14,10 +15,9 @@ public class PanelLogo extends JPanel {
     public PanelLogo() {
         try {
             logo = ImageIO.read(new File("src/res/friet.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(PanelLogo.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override

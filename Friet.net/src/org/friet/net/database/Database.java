@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.friet.net.login.panel.PanelLogin;
 import org.friet.net.main.Main;
 
@@ -296,6 +297,7 @@ public class Database {
 
         } catch (Exception ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Kon de werknemer niet toevoegen aan de database.\n Vul de velden met de juiste gegeventypes in.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -391,7 +393,7 @@ public class Database {
                 hash.put("naam", naam);
                 hash.put("prijs per item", set.getString("PrijsPerItem"));
                 hash.put("hoeveelheid per item", set.getString("HoeveelheidperItem"));
-
+                hash.put("Barcode", set.getString("Barcode") == null ? "" : set.getString("Barcode"));
                 if (hallo.get(cat) == null) {
                     Map<String, Object> hash2 = new HashMap<String, Object>();
                     hash2.put(naam, hash);
@@ -531,7 +533,7 @@ public class Database {
         return hallo;
     }
 
-    public String addNewItem(String naam, String HoeveelheidPerItem, String Prijs, String Inhoud, String soortnaam) {
+    public String addNewItem(String naam, String HoeveelheidPerItem, String Prijs, String Inhoud, String Barcode, String soortnaam) {
         Statement stat;
         ResultSet set;
         int inhoudID = -1;
@@ -566,8 +568,8 @@ public class Database {
 
         try {
             stat = con.createStatement();
-            stat.execute("INSERT INTO Item ( Naam, PrijsPerItem, Soort, SoortId, HoeveelheidPerItem )\n"
-                    + "VALUES ('" + naam + "', " + Prijs + ", " + SoortID + ", " + inhoudID + ", " + HoeveelheidPerItem + ")");
+            stat.execute("INSERT INTO Item ( Naam, PrijsPerItem, Soort, SoortId, HoeveelheidPerItem,Barcode )\n"
+                    + "VALUES ('" + naam + "', " + Prijs + ", " + SoortID + ", " + inhoudID + ", " + HoeveelheidPerItem + ", '" + Barcode + "')");
             stat.closeOnCompletion();
         } catch (SQLException ex) {
             return "Kon het Item niet Toevoegen aan de database probeer opnieuw.";
@@ -582,7 +584,7 @@ public class Database {
         ResultSet set;
         try {
             stat = con.createStatement();
-            stat.execute("SELECT inhoud.SoortNaam, inhoud.Hoeveelheid, Soort.CategorieNaam\n"
+            stat.execute("SELECT inhoud.SoortNaam, inhoud.Hoeveelheid, Soort.CategorieNaam, inhoud.Barcodes\n"
                     + "FROM Soort INNER JOIN inhoud ON Soort.SoortID = inhoud.Categorie;");
             set = stat.getResultSet();
             while (set.next()) {
@@ -592,7 +594,7 @@ public class Database {
                 String cat = set.getString("CategorieNaam");
                 hash.put("naam", naam);
                 hash.put("Hoeveelheid", set.getString("Hoeveelheid"));
-
+                hash.put("barcode", set.getString("Barcodes") == null ? "" : set.getString("Barcodes"));
                 if (hallo.get(cat) == null) {
                     Map<String, Object> hash2 = new HashMap<String, Object>();
                     hash2.put(naam, hash);
@@ -610,7 +612,7 @@ public class Database {
         return hallo;
     }
 
-    public String addNewInhoud(String text, String text0, String soortnaam) {
+    public String addNewInhoud(String text, String text0, String Barcode, String soortnaam) {
         Statement stat;
         ResultSet set;
         int SoortID = 0;
@@ -630,10 +632,11 @@ public class Database {
 
         try {
             stat = con.createStatement();
-            stat.execute("INSERT INTO Inhoud ( Categorie, Soortnaam, Hoeveelheid)\n"
-                    + "VALUES (" + SoortID + ", '" + text + "', " + text0 + ")");
+            stat.execute("INSERT INTO Inhoud ( Categorie, Soortnaam, Hoeveelheid, Barcodes)\n"
+                    + "VALUES (" + SoortID + ", '" + text + "', " + text0 + "," + Barcode + ")");
             stat.closeOnCompletion();
         } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
             return "Kon de inhoud niet toevoegen aan de Database.";
         }
         return "Kon de inhoud sucsessvol toevoegen aan de database.";
@@ -720,13 +723,13 @@ public class Database {
     }
 
 
-    public String updateInhoud(String currentSelected, String NaamNieuw, String HoeveelHeidNieuw) {
+    public String updateInhoud(String currentSelected, String NaamNieuw, String HoeveelHeidNieuw, String Barcode) {
         Statement stat;
         ResultSet set;
 
         try {
             stat = con.createStatement();
-            stat.execute("UPDATE inhoud SET inhoud.SoortNaam = '" + NaamNieuw + "', inhoud.Hoeveelheid = '" + HoeveelHeidNieuw + "' "
+            stat.execute("UPDATE inhoud SET inhoud.SoortNaam = '" + NaamNieuw + "', inhoud.Hoeveelheid = '" + HoeveelHeidNieuw + "' , inhoud.Barcodes = '" + Barcode + "' "
                     + "WHERE (([inhoud].[SoortNaam])='" + currentSelected + "')");
             stat.closeOnCompletion();
         } catch (SQLException ex) {
@@ -736,13 +739,13 @@ public class Database {
         return "Kon de Inhoud sucsessvol opslaan.";
     }
 
-    public String updateItem(String currentSelected, String NaamNieuw, String HoeveelheidPerItem, String PrijsPerItem) {
+    public String updateItem(String currentSelected, String NaamNieuw, String HoeveelheidPerItem, String PrijsPerItem, String Barcode) {
         Statement stat;
         ResultSet set;
 
         try {
             stat = con.createStatement();
-            stat.execute("UPDATE Item SET Item.Naam = '"+NaamNieuw+"', Item.HoeveelheidPerItem = '"+HoeveelheidPerItem+"', Item.PrijsPerItem = '"+PrijsPerItem+"'\n"
+            stat.execute("UPDATE Item SET Item.Naam = '" + NaamNieuw + "', Item.HoeveelheidPerItem = '" + HoeveelheidPerItem + "', Item.PrijsPerItem = '" + PrijsPerItem + "', Item.Barcode='" + Barcode + "'\n"
                     + "WHERE (([Item].[Naam]='"+currentSelected+"'));");
             stat.closeOnCompletion();
         } catch (SQLException ex) {
