@@ -158,7 +158,7 @@ public class PanelItems extends JPanel {
             if (result == JOptionPane.YES_OPTION) {
                 if (((DefaultTableModel) list.getModel()).getRowCount() == 1) {
                     Error = Main.db.removeSoort(Naam);
-                } else if (((DefaultTableModel) list.getModel()).getRowCount() == 2) {
+                } else if (((DefaultTableModel) list.getModel()).getRowCount() == 3) {
                     Error = Main.db.removeInhoud(Naam);
                 } else {
                     Error = Main.db.removeItem(Naam);

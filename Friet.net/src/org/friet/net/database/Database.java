@@ -390,10 +390,11 @@ public class Database {
                 hash = new HashMap<String, String>();
                 String naam = set.getString("Naam");
                 String cat = set.getString("categorienaam");
+                String Barcode = set.getString("Barcode");
                 hash.put("naam", naam);
                 hash.put("prijs per item", set.getString("PrijsPerItem"));
                 hash.put("hoeveelheid per item", set.getString("HoeveelheidperItem"));
-                hash.put("Barcode", set.getString("Barcode") == null ? "" : set.getString("Barcode"));
+                hash.put("Barcode", Barcode == null ? "" : Barcode);
                 if (hallo.get(cat) == null) {
                     Map<String, Object> hash2 = new HashMap<String, Object>();
                     hash2.put(naam, hash);
@@ -592,9 +593,10 @@ public class Database {
                 hash = new HashMap<String, String>();
                 String naam = set.getString("SoortNaam");
                 String cat = set.getString("CategorieNaam");
+                String barcode = set.getString("Barcodes");
                 hash.put("naam", naam);
                 hash.put("Hoeveelheid", set.getString("Hoeveelheid"));
-                hash.put("barcode", set.getString("Barcodes") == null ? "" : set.getString("Barcodes"));
+                hash.put("barcode", barcode == null ? "" : barcode);
                 if (hallo.get(cat) == null) {
                     Map<String, Object> hash2 = new HashMap<String, Object>();
                     hash2.put(naam, hash);
