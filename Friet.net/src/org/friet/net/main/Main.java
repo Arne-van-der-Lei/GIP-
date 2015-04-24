@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -32,13 +34,14 @@ public class Main extends JFrame {
 
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
-                if (KeyEvent.KEY_RELEASED == e.getID()) {
+                if (KeyEvent.KEY_RELEASED == e.getID()) { 
                     if (KeyEvent.VK_ENTER == e.getKeyCode()) {
-                        Main.s = s;
-                        Main.scann(s);
-                        s = "";
+                        try{
+                            Main.scann(Main.s);
+                        }catch(Exception ex){Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);}
+                        Main.s = "";
                     } else {
-                        s += e.getKeyChar();
+                        Main.s += e.getKeyChar();
                     }
                 }
                 return false;
@@ -75,7 +78,7 @@ public class Main extends JFrame {
         while (!panel.done ) {
 
         }
-
+        Main.s = "";
         frameLogin.setVisible(false);
         return false;
     }

@@ -430,12 +430,11 @@ public class Database {
         String out = "";
         try {
             stat = con.createStatement();
-            stat.execute("SELECT Naam,barcode FROM Item,Barcodes ORDER BY Item.ItemId");
+            stat.execute("SELECT Naam,barcode FROM Item WHERE Item.Barcode = '"+s+"'ORDER BY Item.ItemId");
             set = stat.getResultSet();
             while (set.next()) {
-                if (set.getString("barcode").equals(s)) {
-                    out = set.getString("Naam");
-                }
+                out = set.getString("Naam");
+                break;
             }
             set.close();
             stat.close();
@@ -451,10 +450,10 @@ public class Database {
         ResultSet set;
         try {
             stat = con.createStatement();
-            stat.execute("SELECT SoortNaam FROM Inhoud,barcodes WHERE barcodes.barcode='" + s + "' ORDER BY Inhoud.SoortId");
+            stat.execute("SELECT SoortNaam FROM Inhoud WHERE Inhoud.barcodes='" + s + "' ORDER BY Inhoud.SoortId");
             set = stat.getResultSet();
             while (set.next()) {
-                s = set.getString("SoortNaam");
+                s = set.getString("SoortNaam").toLowerCase();
             }
 
         } catch (SQLException ex) {

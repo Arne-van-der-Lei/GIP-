@@ -161,7 +161,9 @@ public class PanelBestelling extends JPanel {
     public void barcode(String s) {
         for (TreeMap<String, Float> key : items.values()) {
             for (String naam : key.keySet()) {
+                System.out.println(naam);
                 if (naam.equals(Main.db.getnaam(s))) {
+                    System.out.println(s);
                     float f = key.get(naam);
                     model.addRow(new Object[]{"  " + naam, "   " + 1, String.format("%10.2f", f)});
                     prijs += f;
