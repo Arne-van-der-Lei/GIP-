@@ -82,7 +82,7 @@ public class PanelItems extends JPanel {
             for (Object itemm : soort.values()) {
                 if (itemm.getClass() != String.class) {
                     Map<String, Object> item = (Map<String, Object>) itemm;
-                    Button button = new Button(item.get("naam") + "");
+                    Button button = new Button("<html><body style='font-size:20px'><p>" + item.get("naam") + "<p></body></html>");
                     button.addActionListener(new Event());
                     Color c = Main.db.randomKleur();
                     button.setBackground(c);
@@ -124,8 +124,8 @@ public class PanelItems extends JPanel {
                     PopupV2 popup = new PopupV2(!item, 3, b.getName().split(" ")[1]);
                 } else {
                     ((DefaultTableModel) list.getModel()).setRowCount(0);
-                    Map<String, String> map = (Map<String, String>) ((Map<String, Object>) items.get(soorten.getSelectedComponent().toString().split("<p>")[1])).get(((JButton) e.getSource()).getText());
-                    System.out.println(((JButton) e.getSource()).getText());
+                    Map<String, String> map = (Map<String, String>) ((Map<String, Object>) items.get(soorten.getSelectedComponent().toString().split("<p>")[1])).get(((JButton) e.getSource()).getName());
+                    System.out.println(((JButton) e.getSource()).getName());
                     for (String s : map.keySet()) {
                         ((DefaultTableModel) list.getModel()).addRow(new Object[]{s, map.get(s).replace('.', ',')});
                     }

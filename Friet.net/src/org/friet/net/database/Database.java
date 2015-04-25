@@ -430,10 +430,10 @@ public class Database {
         String out = "";
         try {
             stat = con.createStatement();
-            stat.execute("SELECT Naam,barcode FROM Item WHERE Item.Barcode = '"+s+"'ORDER BY Item.ItemId");
+            stat.execute("SELECT Naam FROM Item WHERE Item.Barcode = '"+s+"' ORDER BY Item.ItemId");
             set = stat.getResultSet();
             while (set.next()) {
-                out = set.getString("Naam");
+                out = set.getString("Naam").toLowerCase();
                 break;
             }
             set.close();
@@ -685,7 +685,6 @@ public class Database {
                     + "WHERE SoortNaam='" + Naam + "';");
             stat.closeOnCompletion();
         } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
             return "Kon de inhoud niet verwijderen van de Database.";
         }
         return "Kon de inhoud sucsessvol verwijderen van database.";
