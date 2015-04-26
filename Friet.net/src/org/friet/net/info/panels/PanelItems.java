@@ -20,6 +20,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import org.friet.net.UI.Button;
 import org.friet.net.UI.Table;
+import org.friet.net.UI.icons.Icone;
 import org.friet.net.main.Main;
 import org.friet.net.main.PopupV2;
 
@@ -50,11 +51,14 @@ public class PanelItems extends JPanel {
         JPanel p3 = new JPanel(new BorderLayout());
         JPanel p2 = new JPanel(new GridLayout(1, 2));
 
-        remove = new Button("Remove");
+        remove = new Button("");
         remove.addActionListener(new Event3());
-        
-        Save = new Button("Save");
+        remove.setIcon(new Icone("Cancel"));
+
+        Save = new Button("");
         Save.addActionListener(new Event4());
+        Save.setIcon(new Icone("Confirm"));
+
         refresh();
 
         p3.add(scroll);
@@ -92,7 +96,7 @@ public class PanelItems extends JPanel {
                 }
             }
 
-            Button button = new Button("+");
+            Button button = new Button("<html><body style='font-size:30px'><p>+<p></body></html>");
             button.addActionListener(new Event());
             Color c = Main.db.randomKleur();
             button.setBackground(c);

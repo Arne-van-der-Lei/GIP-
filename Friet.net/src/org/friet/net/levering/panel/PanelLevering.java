@@ -53,7 +53,7 @@ public class PanelLevering extends JPanel {
         JPanel p1 = new JPanel(new BorderLayout());
         JPanel p = new JPanel(new GridLayout(1, 4));
 
-        list = new Table(new NETableModel(new Object[]{"Artikel:", "Aantal"}, 0));
+        list = new Table(new NETableModel(new Object[]{"Artikel", "Aantal"}, 0));
         scroll = new JScrollPane(list);
         p1.add(scroll);
 

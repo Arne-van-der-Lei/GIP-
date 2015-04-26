@@ -37,4 +37,16 @@ public class PanelBestellingen extends JPanel {
         }
         this.add(scroll);
     }
+
+    public void refresh() {
+        items = new HashMap<String, Object>();
+        items = Main.db.getBestellingen();
+        DefaultTableModel model = new NETableModel(new Object[]{"verkoopsdatum", "prijs", "naam"}, 0);
+        list = new Table(model);
+        scroll = new JScrollPane(list);
+        for (Object s : items.values()) {
+            Map<String, String> map = (Map<String, String>) s;
+            model.addRow(map.values().toArray());
+        }
+    }
 }

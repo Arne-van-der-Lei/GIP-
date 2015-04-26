@@ -497,15 +497,8 @@ public class Database {
         Map<String, Object> hallo = new TreeMap<String, Object>(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                if (o1.split("||")[0].equals("")) {
-                    return -1;
-                }
-                if (o2.split("||")[0].equals("")) {
-                    return -1;
-                }
-                Date date1 = new Date(Long.parseLong(o1.split("||")[0], 10));
-                Date date2 = new Date(Long.parseLong(o2.split("||")[0], 10));
-                return -date1.compareTo(date2);
+                
+                return -o1.compareTo(o2);
             }
         });
         Statement stat;
@@ -520,11 +513,20 @@ public class Database {
                 Map<String, String> hash;
                 hash = new HashMap<String, String>();
                 Date naam = set.getDate("verkoopdatum");
-                hash.put("verkoopdatum", naam.toString());
-                hash.put("prijs", set.getString("Totaalprijs"));
-                hash.put("naam", set.getString("Naam"));
-                System.out.println(naam.getTime());
-                hallo.put(naam.getTime() + "||" + set.getString("BestellingID") + set.getString("ItemID"), hash);
+                String id = set.getString("BestellingID");
+                if (hallo.containsKey(id) == true) {
+                    Object srrrt = hallo.get(id);
+                    hash.put("verkoopdatum", naam.toString());
+                    hash.put("prijs", set.getString("Totaalprijs"));
+                    Map<String, String> hashh = (Map<String, String>) srrrt;
+                    hash.put("naam", hashh.get("naam") + ", " + set.getString("Naam"));
+                    hallo.put(id, hash);
+                } else {
+                    hash.put("verkoopdatum", naam.toString());
+                    hash.put("prijs", set.getString("Totaalprijs"));
+                    hash.put("naam", set.getString("Naam"));
+                    hallo.put(id, hash);
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
