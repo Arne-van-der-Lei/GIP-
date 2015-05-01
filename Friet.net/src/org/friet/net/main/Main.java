@@ -5,8 +5,11 @@ import java.awt.GridLayout;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -74,6 +77,13 @@ public class Main extends JFrame {
         frameLogin.setVisible(true);
         frameLogin.setAlwaysOnTop(true);
         frameLogin.setResizable(false);
+        try {
+            BufferedImage image = ImageIO.read(new File("src/res/iconLogo.png"));
+            frameLogin.setIconImage(image);
+        } catch (Exception ex) {
+            Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         //TODO: uitroepteken + manager
         while (!panel.done ) {
 
@@ -91,6 +101,12 @@ public class Main extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setBounds(0, 0, 600, 600);
+        try {
+            BufferedImage image = ImageIO.read(new File("src/res/iconLogo.png"));
+            this.setIconImage(image);
+        } catch (Exception ex) {
+            Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         menu = new JMenuBar();
         menu.setMaximumSize(new Dimension(10, 100));
 

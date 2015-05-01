@@ -719,7 +719,7 @@ public class Database {
             stat.closeOnCompletion();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-            return "Kon de soort niet Opslaan.";
+            return "Kon de soort niet opslaan.";
         }
         return "Kon de soort sucsessvol opslaan.";
     }
@@ -738,7 +738,7 @@ public class Database {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
             return "Kon de Inhoud niet Opslaan.";
         }
-        return "Kon de Inhoud sucsessvol opslaan.";
+        return "Kon de inhoud sucsessvol opslaan.";
     }
 
     public String updateItem(String currentSelected, String NaamNieuw, String HoeveelheidPerItem, String PrijsPerItem, String Barcode) {
@@ -755,5 +755,30 @@ public class Database {
             return "Kon de Item niet Opslaan.";
         }
         return "Kon de Item sucsessvol opslaan.";
+    }
+
+    public Float getItemsInhoud(String get) {
+        Statement stat;
+        ResultSet set;
+        Float ok = 0f;
+        try {
+            stat = con.createStatement();
+            stat.execute("SELECT SoortID FROM Inhoud WHERE Inhoud.soortNaam = '" + get + "';");
+            set = stat.getResultSet();
+            set.next();
+            String str = set.getString("SoortID");
+            set.close();
+            stat.close();
+            System.out.print(str);
+            stat = con.createStatement();
+            stat.execute("SELECT HoeveelheidPerItem FROM item WHERE item.soortid = " + str + ";");
+            set = stat.getResultSet();
+            set.next();
+            ok = set.getFloat("HoeveelheidPerItem");
+            stat.closeOnCompletion();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ok;
     }
 }

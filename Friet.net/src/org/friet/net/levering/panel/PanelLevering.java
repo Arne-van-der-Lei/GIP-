@@ -222,6 +222,9 @@ public class PanelLevering extends JPanel {
                         }
                         list.setModel(new DefaultTableModel(new Object[]{"Artikel:", "Aantal"}, 0));
                     }
+
+                    Main.frame.main.Inhoud.refresh();
+                    Main.frame.main.items.refresh();
                 }
             }
         }

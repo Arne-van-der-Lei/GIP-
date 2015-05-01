@@ -108,6 +108,7 @@ public class PopupV2 extends JFrame {
             Main.frame.main.items.refresh();
             Main.frame.main.bestelling.refresh();
             Main.frame.main.levering.refresh();
+            drop();
         }
     }
 }

@@ -277,6 +277,9 @@ public class PanelBestelling extends JPanel {
                         prijs = 0;
                         UpdateText(prijs);
                     }
+
+                    Main.frame.main.Inhoud.refresh();
+                    Main.frame.main.items.refresh();
                 }
             }
         }

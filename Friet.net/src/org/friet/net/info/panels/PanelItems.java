@@ -73,7 +73,7 @@ public class PanelItems extends JPanel {
         if (soorten.getName().equals("soort")) {
             this.remove(soorten);
         }
-        if (item) {
+        if (item == true) {
             items = Main.db.getInfoItems();
         } else {
             items = Main.db.getInfoInhoud();
@@ -85,13 +85,19 @@ public class PanelItems extends JPanel {
             JPanel p = new JPanel(new GridLayout(5, 5));
             for (Object itemm : soort.values()) {
                 if (itemm.getClass() != String.class) {
-                    Map<String, Object> item = (Map<String, Object>) itemm;
-                    Button button = new Button("<html><body style='font-size:20px'><p>" + item.get("naam") + "<p></body></html>");
+                    Map<String, Object> itemss = (Map<String, Object>) itemm;
+                    Button button = new Button("<html><body style='font-size:20px'><p>" + itemss.get("naam") + "<p></body></html>");
                     button.addActionListener(new Event());
                     Color c = Main.db.randomKleur();
                     button.setBackground(c);
                     button.setC2(c);
-                    button.setName(item.get("naam") + "");
+                    if (item == false) {
+                        if (Float.parseFloat(itemss.get("Hoeveelheid").toString()) < Main.db.getItemsInhoud(itemss.get("naam").toString()) * 10) {
+                            button.setBackground(Color.red);
+                            button.setC2(Color.red);
+                        }
+                    }
+                    button.setName(itemss.get("naam") + "");
                     p.add(button);
                 }
             }
@@ -129,7 +135,7 @@ public class PanelItems extends JPanel {
                 } else {
                     ((DefaultTableModel) list.getModel()).setRowCount(0);
                     Map<String, String> map = (Map<String, String>) ((Map<String, Object>) items.get(soorten.getSelectedComponent().toString().split("<p>")[1])).get(((JButton) e.getSource()).getName());
-                    System.out.println(((JButton) e.getSource()).getName());
+                    //System.out.println(((JButton) e.getSource()).getName());
                     for (String s : map.keySet()) {
                         ((DefaultTableModel) list.getModel()).addRow(new Object[]{s, map.get(s).replace('.', ',')});
                     }
@@ -154,6 +160,7 @@ public class PanelItems extends JPanel {
     }
 
     private class Event3 implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             String Error;
