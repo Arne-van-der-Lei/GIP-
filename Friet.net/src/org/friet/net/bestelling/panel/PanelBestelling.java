@@ -56,7 +56,7 @@ public class PanelBestelling extends JPanel {
         this.setLayout(new BorderLayout());
 
         JPanel p = new JPanel(new BorderLayout());
-        model = new NETableModel(new Object[]{"Artikel", "Aantal", "Prijs"}, 0);
+        model = new NETableModel(new Object[]{Main.config.getString("tblBestellingArtikel"), Main.config.getString("tblBestellingAantal"), Main.config.getString("tblBestellingPrijs")}, 0);
         table = new Table(model);
         
         list = new JScrollPane(table);
@@ -66,7 +66,7 @@ public class PanelBestelling extends JPanel {
 
         JPanel p2 = new JPanel(new GridLayout(2, 1));
         ipfield = new JTextField();
-        ipfield.setText("Totaal prijs: 0.0");
+        ipfield.setText(Main.config.getString("BestellingPrijs").replace("[prijs]", "0.0"));
         UpdateText(prijs);
         ipfield.setFont(new Font("calibri", Font.BOLD, 20));
         p2.add(ipfield);
@@ -155,7 +155,7 @@ public class PanelBestelling extends JPanel {
     }
 
     public void UpdateText(float i) {
-        ipfield.setText("Totaal prijs: €" + String.format("%10.2f", prijs));
+        ipfield.setText(Main.config.getString("BestellingPrijs").replace("[prijs]", String.format("%10.2f", prijs)));
     }
 
     public void barcode(String s) {
@@ -263,7 +263,7 @@ public class PanelBestelling extends JPanel {
                         Logger.getLogger(PanelBestelling.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
-                    int bool = JOptionPane.showConfirmDialog(nieuweKlant, prijs, "Einde klant", 0);
+                    int bool = JOptionPane.showConfirmDialog(nieuweKlant, Main.config.getString("Bestelling").replace("[prijs]", String.format("%10.2f", prijs)), Main.config.getString("BestellingHeader"), 0);
                     if (bool == 0) {
                         int bestellingID = Main.db.addBestelling( Main.Werknemmersnummer, prijs);
                         for (Object i : model.getDataVector().toArray()) {
@@ -280,6 +280,7 @@ public class PanelBestelling extends JPanel {
 
                     Main.frame.main.Inhoud.refresh();
                     Main.frame.main.items.refresh();
+                    Main.frame.main.InfoBestellingen.refresh();
                 }
             }
         }

@@ -1,0 +1,86 @@
+{
+    "addNewItemFouteIngaveVeldInhoud"   : "Faute ingave van veld Inhoud. In did veld moet de naam van de Inhoud staan waraan hij gelinkt staat.",
+    "addNewItemItemNietToegevoegd"      : "Kon het Item niet Toevoegen aan de database probeer opnieuw.",
+    "addNewItemGoed"                    : "Kon het item goed toevoegen.",
+    
+    "addNewInhoudFout"                  : "Kon de inhoud niet toevoegen aan de Database.",
+    "addNewInhoudGoed"                  : "Kon de inhoud sucsessvol toevoegen aan de database.",
+    
+    "addNewSoortFout"                   : "Kon de Soort niet toevoegen aan de Database.",
+    "addNewSoortGoed"                   : "Kon de Soort sucsessvol toevoegen aan de database.",
+    
+    "removeSoortFout"                   : "Kon het Soort niet verwijderen van de Database.",
+    "removeSoortGoed"                   : "Kon het Soort sucsessvol verwijderen van database.",
+    
+    "removeInhoudFout"                  : "Kon de inhoud niet verwijderen van de Database.",
+    "removeInhoudGoed"                  : "Kon de inhoud sucsessvol verwijderen van database.",
+    
+    "removeItemFout"                    : "Kon het Item niet verwijderen van de Database.",
+    "removeItemGoed"                    : "Kon het Item sucsessvol verwijderen van database.",
+    
+    "updateSoortFout"                   : "Kon de soort niet opslaan.",
+    "updateSoortGoed"                   : "Kon de soort sucsessvol opslaan.",
+    
+    "updateInhoudFout"                  : "Kon de Inhoud niet Opslaan.",
+    "updateInhoudGoed"                  : "Kon de inhoud sucsessvol opslaan.",
+    
+    "updateItemFout"                    : "Kon de Item niet Opslaan.",
+    "updateItemGoed"                    : "Kon de Item sucsessvol opslaan.",
+    
+    "LoginFout"                         : "Faute username of passwoord. Probeer opnieuw.",
+    
+    "Verwijderen"                       : "Wilt u [Naam] verwijderen?",
+    "VerwijderenHeader"                 : "Verwijderen",
+    
+    "Opslaan"                           : "Wilt u [currentSelected] opslaan?",
+    "OpslaanHeader"                     : "Opslaan",
+    
+    "Levering"                          : "Toevoegen van items?",
+    "LeveringHeader"                    : "Toevoegen",
+    
+    "Werknemers"                        : "Geef het nieuwe passwoord in van [user]",
+    "WerknemersHeader"                  : "Passwoord",
+    
+    "Bestelling"                        : "Totaal te betelen €[prijs]",
+    "BestellingHeader"                  : "Einde klant",
+    "BestellingPrijs"                   : "Totaale prijs: [prijs] euro",
+    
+    "btnAanmelden"                      : "Aanmelden",
+    "btnGebruikersNaam"                 : "Gebruikersnaam",
+    "btnWachtwoord"                     : "Wachtwoord",
+    "btnVerwijderen"                    : "Verwijderen",
+    "btnOpslaan"                        : "Opslaan",
+    "btnNieuw"                          : "Nieuw",
+    
+    "frmLogin"                          : "Login",
+    "frmMain"                           : "Friet.net",
+    "frmPopup2"                         : "",
+    "frmPopup"                          : "",
+    
+    "menuLevering"                      : "Levering",
+    "menuBestelling"                    : "Bestelling",
+    "menuInfo"                          : "Info Bestelling",
+    "menuWerknemer"                     : "Werknemer",
+    "menuInhoud"                        : "Inhoud",
+    "menuArtikelen"                     : "Artikel",
+    
+    "tblBestellingArtikel"              : "Artikel",
+    "tblBestellingAantal"               : "Aantal",
+    "tblBestellingPrijs"                : "Prijs",
+    
+    "tblLeveringArtikel"                : "Artikel",
+    "tblLeveringAantal"                 : "Aantal",
+    
+    "tblWerknemerID"                    : "WerknemerID",
+    "tblWerknemerVoornaam"              : "Voornaam",
+    "tblWerknemerNaam"                  : "Naam",
+    "tblWerknemerAdres"                 : "Adres",
+    "tblWerknemerPostcode"              : "Postcode",
+    "tblWerknemerGemeente"              : "Gemeente",
+    "tblWerknemerTel"                   : "Telefoonnummer",
+    "tblWerknemerEMail"                 : "E-mail",
+    
+    "tblInfoVerkoopsDatum"              : "VerkoopsDatum",
+    "tblInfoPrijs"                      : "Prijs",
+    "tblInfoNaam"                       : "Naam"
+}

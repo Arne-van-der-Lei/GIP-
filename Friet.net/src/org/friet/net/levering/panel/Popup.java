@@ -27,6 +27,7 @@ public class Popup extends JFrame {
     private String str;
 
     public Popup(String ok) {
+        this.setTitle(Main.config.getString("frmPopup"));
         this.str = ok;
         GridLayout g = new GridLayout(6, 1);
         g.setVgap(5);

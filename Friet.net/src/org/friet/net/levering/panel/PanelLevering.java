@@ -53,7 +53,7 @@ public class PanelLevering extends JPanel {
         JPanel p1 = new JPanel(new BorderLayout());
         JPanel p = new JPanel(new GridLayout(1, 4));
 
-        list = new Table(new NETableModel(new Object[]{"Artikel", "Aantal"}, 0));
+        list = new Table(new NETableModel(new Object[]{Main.config.getString("tblLeveringArtikel"), Main.config.getString("tblLeveringAantal")}, 0));
         scroll = new JScrollPane(list);
         p1.add(scroll);
 
@@ -214,7 +214,7 @@ public class PanelLevering extends JPanel {
                 }
 
                 if (e.getSource() == nieuweKlant) {
-                    int bool = JOptionPane.showConfirmDialog(nieuweKlant, "Toevoegen van items?", "Toevoegen", 0);
+                    int bool = JOptionPane.showConfirmDialog(nieuweKlant, Main.config.getString("Levering"), Main.config.getString("LeveringHeader"), 0);
                     if (bool == 0) {
                         for (Object i : ((DefaultTableModel) list.getModel()).getDataVector().toArray()) {
                             Vector is = (Vector) i;

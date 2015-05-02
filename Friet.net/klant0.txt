@@ -1,5 +1,3 @@
+  friet groot ---       3,00 euro
   friet klein ---       2,00 euro
   friet middel ---       2,40 euro
-  kippets ---       2,50 euro
-  cola (33cl) ---       1,50 euro
-  cola (33cl) ---       1,50 euro

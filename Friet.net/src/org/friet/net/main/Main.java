@@ -7,6 +7,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -18,6 +19,7 @@ import org.friet.net.UI.UI;
 import org.friet.net.database.Database;
 import org.friet.net.login.panel.PanelLogin;
 import org.friet.net.main.panel.MainPanel;
+import org.json.JSONObject;
 
 public class Main extends JFrame {
 
@@ -30,6 +32,7 @@ public class Main extends JFrame {
     public static int Klantnummer;
     public static String s;
     public static boolean scann = false;
+    public static JSONObject config;
 
     public static void main(String[] args) {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
@@ -51,6 +54,20 @@ public class Main extends JFrame {
             }
         });
 
+        try {
+            File file = new File("src/res/config.json");
+            FileInputStream fis;
+            fis = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
+            fis.read(data);
+            fis.close();
+
+            String str = new String(data, "UTF-8");
+            config = new JSONObject(str);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         UI.setLAF();
 
         InitDB();
@@ -67,7 +84,7 @@ public class Main extends JFrame {
     }
 
     public static boolean login() {
-        JFrame frameLogin = new JFrame("Login");
+        JFrame frameLogin = new JFrame(Main.config.getString("frmLogin"));
         frameLogin.setSize(500, 500);
         frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameLogin.setLayout(null);
@@ -96,8 +113,8 @@ public class Main extends JFrame {
     public Main() {
         this.setLayout(new GridLayout(1, 1));
 
-        this.setName("Friet.net");
-        this.setTitle("Friet.net");
+        this.setName(Main.config.getString("frmMain"));
+        this.setTitle(Main.config.getString("frmMain"));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setBounds(0, 0, 600, 600);
@@ -110,21 +127,21 @@ public class Main extends JFrame {
         menu = new JMenuBar();
         menu.setMaximumSize(new Dimension(10, 100));
 
-        JMenu levering = new Menu("Levering");
+        JMenu levering = new Menu(Main.config.getString("menuLevering"));
         levering.setVisible(true);
 
-        JMenu Bestelling = new Menu("Bestelling");
+        JMenu Bestelling = new Menu(Main.config.getString("menuBestelling"));
         Bestelling.setVisible(true);
 
         menu.add(Bestelling);
         menu.add(levering);
 
         if (Main.manager) {
-            JMenu Werknemer = new Menu("Werknemer");
+            JMenu Werknemer = new Menu(Main.config.getString("menuWerknemer"));
             Werknemer.setVisible(true);
-            JMenu Info = new Menu("Artikelen");
+            JMenu Info = new Menu(Main.config.getString("menuArtikelen"));
             Info.setVisible(true);
-            JMenu Inhoud = new Menu("Inhoud");
+            JMenu Inhoud = new Menu(Main.config.getString("menuInhoud"));
             Inhoud.setVisible(true);
 
             menu.add(Werknemer);
@@ -139,7 +156,7 @@ public class Main extends JFrame {
         menu.getMenu(0).setBorderPainted(true);
         menu.getMenu(1).setBorderPainted(false);
 
-        JMenu infoBestellingen = new Menu("Info Bestellingen");
+        JMenu infoBestellingen = new Menu(Main.config.getString("menuInfo"));
         infoBestellingen.setVisible(true);
 
         menu.add(infoBestellingen);

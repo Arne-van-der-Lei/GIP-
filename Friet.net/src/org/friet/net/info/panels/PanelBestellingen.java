@@ -28,7 +28,7 @@ public class PanelBestellingen extends JPanel {
         this.setLayout(new BorderLayout());
         items = new HashMap<String, Object>();
         items = Main.db.getBestellingen();
-        DefaultTableModel model = new NETableModel(new Object[]{"verkoopsdatum", "prijs", "naam"}, 0);
+        DefaultTableModel model = new NETableModel(new Object[]{Main.config.getString("tblInfoVerkoopsDatum"), Main.config.getString("tblInfoPrijs"), Main.config.getString("tblInfoNaam")}, 0);
         list = new Table(model);
         scroll = new JScrollPane(list);
         for (Object s : items.values()) {
@@ -41,7 +41,7 @@ public class PanelBestellingen extends JPanel {
     public void refresh() {
         items = new HashMap<String, Object>();
         items = Main.db.getBestellingen();
-        DefaultTableModel model = new NETableModel(new Object[]{"verkoopsdatum", "prijs", "naam"}, 0);
+        DefaultTableModel model = new NETableModel(new Object[]{Main.config.getString("tblInfoVerkoopsDatum"), Main.config.getString("tblInfoPrijs"), Main.config.getString("tblInfoNaam")}, 0);
         list = new Table(model);
         scroll = new JScrollPane(list);
         for (Object s : items.values()) {

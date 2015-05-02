@@ -46,12 +46,12 @@ public class PanelLogin extends JPanel {
         JPanel p = new JPanel(g2);
 
         userText = new JTextField(20);
-        userText.setText("Gebruikersnaam");
+        userText.setText(Main.config.getString("btnGebruikersNaam"));
         userText.addKeyListener(new KeyListener() {
 
             @Override
             public void keyTyped(KeyEvent e) {
-                if ("Gebruikersnaam".equals(userText.getText())) {
+                if (Main.config.getString("btnGebruikersNaam").equals(userText.getText())) {
                     userText.setText("");
                 }
             }
@@ -68,13 +68,13 @@ public class PanelLogin extends JPanel {
         p.add(userText);
 
         passwordText = new JPasswordField(20);
-        passwordText.setText("Wachtwoord");
+        passwordText.setText(Main.config.getString("btnWachtwoord"));
         passwordText.addActionListener(new EventLogin());
         passwordText.addKeyListener(new KeyListener() {
 
             @Override
             public void keyTyped(KeyEvent e) {
-                if ("Wachtwoord".equals(passwordText.getText())) {
+                if (Main.config.getString("btnWachtwoord").equals(passwordText.getText())) {
                     passwordText.setText("");
                 }
             }
@@ -90,7 +90,7 @@ public class PanelLogin extends JPanel {
         });
         p.add(passwordText);
 
-        login = new Button("Aanmelden");
+        login = new Button(Main.config.getString("btnAanmelden"));
         login.addActionListener(new EventLogin());
         p.add(login);
         this.add(new PanelLogo());
@@ -108,7 +108,7 @@ public class PanelLogin extends JPanel {
                 switch (maybe) {
                     case 0:
                         done = false;
-                        JOptionPane.showMessageDialog(null, "Faute username of passwoord. Probeer opnieuw.");
+                        JOptionPane.showMessageDialog(null, Main.config.getString("LoginFout"));
                         break;
                     case 1:
                         done = true;

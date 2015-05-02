@@ -339,7 +339,7 @@ public class Database {
             while (set.next()) {
                 TreeMap<String, String> hash;
                 hash = new TreeMap<>(new Comparator<String>() {
-                    public String[] ok = new String[]{"Werknemer ID", "Voornaam", "Naam", "Adres", "Postcode", "Gemeente", "Telefoonnummer", "E-mail"};
+                    public String[] ok = new String[]{Main.config.getString("tblWerknemerID"), Main.config.getString("tblWerknemerVoornaam"), Main.config.getString("tblWerknemerNaam"), Main.config.getString("tblWerknemerAdres"), Main.config.getString("tblWerknemerPostcode"), Main.config.getString("tblWerknemerGemeente"), Main.config.getString("tblWerknemerTel"), Main.config.getString("tblWerknemerEMail")};
 
                     @Override
                     public int compare(String o1, String o2) {
@@ -358,14 +358,14 @@ public class Database {
                         return first > last ? 1 : first < last ? -1 : 0;
                     }
                 });
-                hash.put("Voornaam", set.getString("voornaam"));
-                hash.put("Adres", set.getString("adres"));
-                hash.put("Gemeente", set.getString("gemeente"));
-                hash.put("E-mail", set.getString("emailadres"));
-                hash.put("Werknemer ID", set.getString("WerknemerID"));
-                hash.put("Naam", set.getString("naam"));
-                hash.put("Postcode", set.getString("postcode"));
-                hash.put("Telefoonnummer", set.getString("telefoonnummer"));
+                hash.put(Main.config.getString("tblWerknemerVoornaam"), set.getString("voornaam"));
+                hash.put(Main.config.getString("tblWerknemerAdres"), set.getString("adres"));
+                hash.put(Main.config.getString("tblWerknemerGemeente"), set.getString("gemeente"));
+                hash.put(Main.config.getString("tblWerknemerEMail"), set.getString("emailadres"));
+                hash.put(Main.config.getString("tblWerknemerID"), set.getString("WerknemerID"));
+                hash.put(Main.config.getString("tblWerknemerNaam"), set.getString("naam"));
+                hash.put(Main.config.getString("tblWerknemerPostcode"), set.getString("postcode"));
+                hash.put(Main.config.getString("tblWerknemerTel"), set.getString("telefoonnummer"));
                 hallo.add(hash);
             }
 
@@ -553,7 +553,7 @@ public class Database {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (inhoudID == -1) {
-            return "Faute ingave van veld Inhoud. In did veld moet de naam van de Inhoud staan waraan hij gelinkt staat.";
+            return Main.config.getString("addNewItemFouteIngaveVeldInhoud");
         }
         try {
             stat = con.createStatement();
@@ -574,9 +574,9 @@ public class Database {
                     + "VALUES ('" + naam + "', " + Prijs + ", " + SoortID + ", " + inhoudID + ", " + HoeveelheidPerItem + ", '" + Barcode + "')");
             stat.closeOnCompletion();
         } catch (SQLException ex) {
-            return "Kon het Item niet Toevoegen aan de database probeer opnieuw.";
+            return Main.config.getString("addNewItemItemNietToegevoegd");
         }
-        return "Kon het item goed toevoegen.";
+        return Main.config.getString("addNewItemGoed");
     }
 
     public Map<String, Object> getInfoInhoud() {
@@ -640,9 +640,9 @@ public class Database {
             stat.closeOnCompletion();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-            return "Kon de inhoud niet toevoegen aan de Database.";
+            return Main.config.getString("addNewInhoudFout");
         }
-        return "Kon de inhoud sucsessvol toevoegen aan de database.";
+        return Main.config.getString("addNewInhoudGoed");
     }
 
     public String addNewSoort(String text) {
@@ -656,9 +656,9 @@ public class Database {
             stat.closeOnCompletion();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-            return "Kon de Soort niet toevoegen aan de Database.";
+            return Main.config.getString("addNewSoortFout");
         }
-        return "Kon de Soort sucsessvol toevoegen aan de database.";
+        return Main.config.getString("addNewSoortGoed");
     }
 
     public String removeSoort(String Naam) {
@@ -672,9 +672,9 @@ public class Database {
             stat.closeOnCompletion();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-            return "Kon het Soort niet verwijderen van de Database.";
+            return Main.config.getString("removeSoortFout");
         }
-        return "Kon het Soort sucsessvol verwijderen van database.";
+        return Main.config.getString("removeSoortGoed");
     }
 
     public String removeInhoud(String Naam) {
@@ -687,9 +687,9 @@ public class Database {
                     + "WHERE SoortNaam='" + Naam + "';");
             stat.closeOnCompletion();
         } catch (SQLException ex) {
-            return "Kon de inhoud niet verwijderen van de Database.";
+            return Main.config.getString("removeInhoudFout");
         }
-        return "Kon de inhoud sucsessvol verwijderen van database.";
+        return Main.config.getString("removeInhoudGoed");
     }
 
     public String removeItem(String Naam) {
@@ -703,9 +703,9 @@ public class Database {
             stat.closeOnCompletion();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-            return "Kon het Item niet verwijderen van de Database.";
+            return Main.config.getString("removeItemFout");
         }
-        return "Kon het Item sucsessvol verwijderen van database.";
+        return Main.config.getString("removeItemGoed");
     }
 
     public String updateSoort(String currentSelected, String NaamNieuw) {
@@ -719,9 +719,9 @@ public class Database {
             stat.closeOnCompletion();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-            return "Kon de soort niet opslaan.";
+            return Main.config.getString("updateSoortFout");
         }
-        return "Kon de soort sucsessvol opslaan.";
+        return Main.config.getString("updateSoortGoed");
     }
 
 
@@ -736,9 +736,9 @@ public class Database {
             stat.closeOnCompletion();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-            return "Kon de Inhoud niet Opslaan.";
+            return Main.config.getString("updateInhoudFout");
         }
-        return "Kon de inhoud sucsessvol opslaan.";
+        return Main.config.getString("updateInhoudGoed");
     }
 
     public String updateItem(String currentSelected, String NaamNieuw, String HoeveelheidPerItem, String PrijsPerItem, String Barcode) {
@@ -752,9 +752,9 @@ public class Database {
             stat.closeOnCompletion();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-            return "Kon de Item niet Opslaan.";
+            return Main.config.getString("updateItemFout");
         }
-        return "Kon de Item sucsessvol opslaan.";
+        return Main.config.getString("updateItemGoed");
     }
 
     public Float getItemsInhoud(String get) {

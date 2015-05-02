@@ -32,6 +32,7 @@ public class PopupV2 extends JFrame {
     private boolean inhoud;
 
     public PopupV2(boolean inhoud, int soort, String soortnaam) {
+        this.setTitle(Main.config.getString("frmPopup2"));
         this.soort = soort;
         this.soortnaam = soortnaam;
         this.inhoud = inhoud;

@@ -55,21 +55,21 @@ public class PanelWerknemers extends JPanel {
         select = new JScrollPane(table);
         select.setMinimumSize(new Dimension(200, 0));
 
-        remove = new Button("Verwijderen");
+        remove = new Button(Main.config.getString("btnVerwijderen"));
         remove.setName("2");
         remove.addActionListener(new Event());
         remove.setBackground(UI.geel);
         remove.setC2(UI.geel);
         remove.setForeground(Color.black);
 
-        add = new Button("Nieuw");
+        add = new Button(Main.config.getString("btnNieuw"));
         add.setName("2");
         add.addActionListener(new Event());
         add.setBackground(UI.geel);
         add.setC2(UI.geel);
         add.setForeground(Color.black);
 
-        edit = new Button("Opslaan");
+        edit = new Button(Main.config.getString("btnOpslaan"));
         edit.setName("2");
         edit.addActionListener(new Event());
         edit.setBackground(UI.geel);
@@ -155,7 +155,7 @@ public class PanelWerknemers extends JPanel {
                                 vv.get(5) + "",
                                 vv.get(4) + "",
                                 vv.get(7) + "",
-                                JOptionPane.showInputDialog("Geef het nieuwe passwoord in van " + vv.get(2)),
+                                JOptionPane.showInputDialog(null, Main.config.getString("Werknemers").replace("[user]", vv.get(2).toString()), Main.config.getString("WerknemersHeader")),
                                 vv.get(6) + "");
                     }
                 }

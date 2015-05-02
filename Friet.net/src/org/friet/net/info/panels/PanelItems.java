@@ -165,7 +165,7 @@ public class PanelItems extends JPanel {
         public void actionPerformed(ActionEvent e) {
             String Error;
             String Naam = ((DefaultTableModel) list.getModel()).getValueAt(list.getModel().getRowCount() - 1, 1).toString();
-            int result = JOptionPane.showConfirmDialog(null, "Wilt u " + Naam + " verwijderen? hiermee verwijderd u ook alle onderliggende items en inhoud.", "Remove", JOptionPane.YES_NO_OPTION);
+            int result = JOptionPane.showConfirmDialog(null, Main.config.getString("Verwijderen").replace("[Naam]", Naam), Main.config.getString("VerwijderenHeader"), JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 if (((DefaultTableModel) list.getModel()).getRowCount() == 1) {
                     Error = Main.db.removeSoort(Naam);
@@ -189,7 +189,7 @@ public class PanelItems extends JPanel {
         public void actionPerformed(ActionEvent e) {
             String Error;
             String NaamNieuw = ((DefaultTableModel) list.getModel()).getValueAt(list.getModel().getRowCount() - 1, 1).toString();
-            int result = JOptionPane.showConfirmDialog(null, "Wilt u " + currentSelected + " opslaan?", "Save", JOptionPane.YES_NO_OPTION);
+            int result = JOptionPane.showConfirmDialog(null, Main.config.getString("Opslaan").replace("[currentSelected]", currentSelected), Main.config.getString("OpslaanHeader"), JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 if (((DefaultTableModel) list.getModel()).getRowCount() == 1) {
                     Error = Main.db.updateSoort(currentSelected, NaamNieuw);
