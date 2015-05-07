@@ -1,5 +1,6 @@
 package org.friet.net.login.panel;
 
+import java.awt.Desktop;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +31,7 @@ public class PanelLogin extends JPanel {
     public JLabel passwordLabel;
     public JPasswordField passwordText;
     public JButton login;
+    public JButton Handleiding;
     public boolean done = false;
 
     public PanelLogin() {
@@ -41,14 +43,13 @@ public class PanelLogin extends JPanel {
         } catch (Exception ex) {
             Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        GridLayout g2 = new GridLayout(5, 1);
+        GridLayout g2 = new GridLayout(6, 1);
         g2.setVgap(5);
         JPanel p = new JPanel(g2);
 
         userText = new JTextField(20);
         userText.setText(Main.config.getString("btnGebruikersNaam"));
         userText.addKeyListener(new KeyListener() {
-
             @Override
             public void keyTyped(KeyEvent e) {
                 if (Main.config.getString("btnGebruikersNaam").equals(userText.getText())) {
@@ -63,7 +64,6 @@ public class PanelLogin extends JPanel {
             @Override
             public void keyReleased(KeyEvent e) {
             }
-
         });
         p.add(userText);
 
@@ -71,7 +71,6 @@ public class PanelLogin extends JPanel {
         passwordText.setText(Main.config.getString("btnWachtwoord"));
         passwordText.addActionListener(new EventLogin());
         passwordText.addKeyListener(new KeyListener() {
-
             @Override
             public void keyTyped(KeyEvent e) {
                 if (Main.config.getString("btnWachtwoord").equals(passwordText.getText())) {
@@ -86,13 +85,16 @@ public class PanelLogin extends JPanel {
             @Override
             public void keyReleased(KeyEvent e) {
             }
-
         });
         p.add(passwordText);
 
         login = new Button(Main.config.getString("btnAanmelden"));
         login.addActionListener(new EventLogin());
         p.add(login);
+
+        Handleiding = new Button(Main.config.getString("btnHandleiding"));
+        Handleiding.addActionListener(new EventHand());
+        p.add(Handleiding);
         this.add(new PanelLogo());
         this.add(p);
 
@@ -122,7 +124,18 @@ public class PanelLogin extends JPanel {
             }
 
         }
+    }
 
+    public class EventHand implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                Desktop.getDesktop().open(new File("src/res/handleiding.docx"));
+            } catch (Exception ex) {
+                Logger.getLogger(PanelLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public static String encode(String data) throws Exception {

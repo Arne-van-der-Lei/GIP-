@@ -1,5 +1,5 @@
 {
-    "addNewItemFouteIngaveVeldInhoud"   : "Faute ingave van veld Inhoud. In did veld moet de naam van de Inhoud staan waraan hij gelinkt staat.",
+    "addNewItemFouteIngaveVeldInhoud"   : "Foute ingave van veld Inhoud. In did veld moet de naam van de Inhoud staan waraan hij gelinkt staat.",
     "addNewItemItemNietToegevoegd"      : "Kon het Item niet Toevoegen aan de database probeer opnieuw.",
     "addNewItemGoed"                    : "Kon het item goed toevoegen.",
     
@@ -41,7 +41,7 @@
     "Werknemers"                        : "Geef het nieuwe passwoord in van [user]",
     "WerknemersHeader"                  : "Passwoord",
     
-    "Bestelling"                        : "Totaal te betelen €[prijs]",
+    "Bestelling"                        : "Totaal te betalen €[prijs]",
     "BestellingHeader"                  : "Einde klant",
     "BestellingPrijs"                   : "Totaale prijs: [prijs] euro",
     
@@ -51,6 +51,7 @@
     "btnVerwijderen"                    : "Verwijderen",
     "btnOpslaan"                        : "Opslaan",
     "btnNieuw"                          : "Nieuw",
+    "btnHandleiding"                    : "Handleiding",
     
     "frmLogin"                          : "Login",
     "frmMain"                           : "Friet.net",
