@@ -131,7 +131,7 @@ public class PanelLogin extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                Desktop.getDesktop().open(new File("src/res/handleiding.docx"));
+                Desktop.getDesktop().open(new File("src/res/handleiding.pdf"));
             } catch (Exception ex) {
                 Logger.getLogger(PanelLogin.class.getName()).log(Level.SEVERE, null, ex);
             }

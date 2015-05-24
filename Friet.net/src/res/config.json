@@ -1,33 +1,33 @@
-{
-    "addNewItemFouteIngaveVeldInhoud"   : "Foute ingave van veld Inhoud. In did veld moet de naam van de Inhoud staan waraan hij gelinkt staat.",
-    "addNewItemItemNietToegevoegd"      : "Kon het Item niet Toevoegen aan de database probeer opnieuw.",
-    "addNewItemGoed"                    : "Kon het item goed toevoegen.",
+ {
+    "addNewItemFouteIngaveVeldInhoud"   : "Foute ingave van veld inhoud. In dit veld moet de naam van de inhoud staan waaraan hij gelinkt is.",
+    "addNewItemItemNietToegevoegd"      : "Kon het item niet toevoegen aan de database. Probeer opnieuw.",
+    "addNewItemGoed"                    : "Het item is succesvol toegevoegd.",
     
-    "addNewInhoudFout"                  : "Kon de inhoud niet toevoegen aan de Database.",
-    "addNewInhoudGoed"                  : "Kon de inhoud sucsessvol toevoegen aan de database.",
+    "addNewInhoudFout"                  : "Kon de inhoud niet toevoegen aan de database.",
+    "addNewInhoudGoed"                  : "De inhoud is succesvol toegevoegd aan de database.",
     
-    "addNewSoortFout"                   : "Kon de Soort niet toevoegen aan de Database.",
-    "addNewSoortGoed"                   : "Kon de Soort sucsessvol toevoegen aan de database.",
+    "addNewSoortFout"                   : "Kon de soort niet toevoegen aan de database.",
+    "addNewSoortGoed"                   : "De soort is successvol toegevoegd aan de database.",
     
-    "removeSoortFout"                   : "Kon het Soort niet verwijderen van de Database.",
-    "removeSoortGoed"                   : "Kon het Soort sucsessvol verwijderen van database.",
+    "removeSoortFout"                   : "Kon de soort niet verwijderen uit de database.",
+    "removeSoortGoed"                   : "De soort is succesvol verwijderd uit de database.",
     
-    "removeInhoudFout"                  : "Kon de inhoud niet verwijderen van de Database.",
-    "removeInhoudGoed"                  : "Kon de inhoud sucsessvol verwijderen van database.",
+    "removeInhoudFout"                  : "Kon de inhoud niet verwijderen uit de database.",
+    "removeInhoudGoed"                  : "De inhoud is succesvol verwijderd uit de database.",
     
-    "removeItemFout"                    : "Kon het Item niet verwijderen van de Database.",
-    "removeItemGoed"                    : "Kon het Item sucsessvol verwijderen van database.",
+    "removeItemFout"                    : "Kon het item niet verwijderen uit de database.",
+    "removeItemGoed"                    : "Het item is succesvol verwijderd uit de database.",
     
     "updateSoortFout"                   : "Kon de soort niet opslaan.",
-    "updateSoortGoed"                   : "Kon de soort sucsessvol opslaan.",
+    "updateSoortGoed"                   : "De soort is succesvol opgeslaan.",
     
-    "updateInhoudFout"                  : "Kon de Inhoud niet Opslaan.",
-    "updateInhoudGoed"                  : "Kon de inhoud sucsessvol opslaan.",
+    "updateInhoudFout"                  : "Kon de inhoud niet opslaan.",
+    "updateInhoudGoed"                  : "De inhoud is succesvol opgeslaan.",
     
-    "updateItemFout"                    : "Kon de Item niet Opslaan.",
+    "updateItemFout"                    : "Kon het item niet opslaan.",
     "updateItemGoed"                    : "Kon de Item sucsessvol opslaan.",
     
-    "LoginFout"                         : "Faute username of passwoord. Probeer opnieuw.",
+    "LoginFout"                         : "Foute gebruikersnaam of paswoord. Probeer opnieuw.",
     
     "Verwijderen"                       : "Wilt u [Naam] verwijderen?",
     "VerwijderenHeader"                 : "Verwijderen",
@@ -38,12 +38,12 @@
     "Levering"                          : "Toevoegen van items?",
     "LeveringHeader"                    : "Toevoegen",
     
-    "Werknemers"                        : "Geef het nieuwe passwoord in van [user]",
+    "Werknemers"                        : "Geef het nieuwe paswoord in van [user]",
     "WerknemersHeader"                  : "Passwoord",
     
-    "Bestelling"                        : "Totaal te betalen €[prijs]",
+    "Bestelling"                        : "Totaal te betalen € [prijs]",
     "BestellingHeader"                  : "Einde klant",
-    "BestellingPrijs"                   : "Totaale prijs: [prijs] euro",
+    "BestellingPrijs"                   : "Totale prijs: [prijs] euro",
     
     "btnAanmelden"                      : "Aanmelden",
     "btnGebruikersNaam"                 : "Gebruikersnaam",
@@ -51,7 +51,6 @@
     "btnVerwijderen"                    : "Verwijderen",
     "btnOpslaan"                        : "Opslaan",
     "btnNieuw"                          : "Nieuw",
-    "btnHandleiding"                    : "Handleiding",
     
     "frmLogin"                          : "Login",
     "frmMain"                           : "Friet.net",
@@ -81,7 +80,8 @@
     "tblWerknemerTel"                   : "Telefoonnummer",
     "tblWerknemerEMail"                 : "E-mail",
     
-    "tblInfoVerkoopsDatum"              : "VerkoopsDatum",
+    "tblInfoVerkoopsDatum"              : "Verkoopsdatum",
     "tblInfoPrijs"                      : "Prijs",
-    "tblInfoNaam"                       : "Naam"
+    "tblInfoNaam"                       : "Naam",
+    "btnHandleiding"                    : "Handleiding"
 }
